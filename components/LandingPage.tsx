@@ -100,17 +100,23 @@ const LandingPage: React.FC = () => {
   };
 
   const executeCheckout = async (planName: string, cycle: 'monthly' | 'quarterly' | 'semiannual') => {
-    // Map plans to Stripe Price IDs
-    const priceMap: any = {
-      'Essencial-monthly': 'price_1StgSxDiv2beAnVS5JvJEGRr', // TEST ID PROVIDED BY USER
-      // Add others here later
+    // Map plans to Stripe Price IDs (PRODUCTION - created via Stripe MCP)
+    const priceMap: Record<string, string> = {
+      // Essencial: prod_UKtULNmqQVeJTL
+      'Essencial-monthly':    'price_1TMDhoDWlGIoBgz1ifmKQn7r', // R$ 129,90/mês
+      'Essencial-quarterly':  'price_1TMDhpDWlGIoBgz1YbX8bm0R', // R$ 359,70 (3x R$119,90)
+      'Essencial-semiannual': 'price_1TMDhqDWlGIoBgz1dRmSM2we', // R$ 659,40 (6x R$109,90)
+      // Premium: prod_UKtUB2sDaM5Tx1
+      'Premium-monthly':    'price_1TMDhsDWlGIoBgz1hGMZbMUm', // R$ 179,90/mês
+      'Premium-quarterly':  'price_1TMDhtDWlGIoBgz1lEr881uW', // R$ 509,70 (3x R$169,90)
+      'Premium-semiannual': 'price_1TMDhtDWlGIoBgz1HobvAV3q', // R$ 959,40 (6x R$159,90)
     };
 
     const key = `${planName}-${cycle}`;
     const priceId = priceMap[key];
 
     if (!priceId) {
-      alert('Este plano ainda não está configurado no ambiente de teste. Tente o Essencial Mensal.');
+      alert('Este plano ainda não está configurado. Por favor, tente novamente.');
       return;
     }
 
