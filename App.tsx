@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 import DashboardHome from './components/DashboardHome';
 import StyleDNA from './components/StyleDNA';
@@ -122,6 +123,7 @@ const App: React.FC = () => {
       <ToastProvider>
         <BrowserRouter>
           <AppContent />
+          <Analytics />
         </BrowserRouter>
       </ToastProvider>
     </UserProvider>
