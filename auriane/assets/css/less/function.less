@@ -1,0 +1,90 @@
+// Transitions
+.transition(@transition) {
+  -webkit-transition: @transition;
+  -o-transition: @transition;
+  -ms-transition: @transition;
+  -moz-transition: @transition;
+  transition: @transition;
+}
+
+.transition-delay(@transition) {
+  -webkit-transition-delay: @transition;
+  -o-transition-delay: @transition; 
+  -ms-transition-delay: @transition;
+  -moz-transition-delay: @transition;
+  transition-delay: @transition;
+}
+
+
+.transformy(@transform) {
+  -webkit-transform: translateY(@transform);
+  -o-transform: translateY(@transform);
+  -ms-transform: translateY(@transform);
+  -moz-transform: translateY(@transform);
+  transform: translateY(@transform);
+}
+
+.transformx(@transform) {
+  -webkit-transform: translateX(@transform);
+  -o-transform: translateX(@transform);
+  -ms-transform: translateX(@transform);
+  -moz-transform: translateX(@transform);
+  transform: translateX(@transform);
+}
+
+.transform(@transform) {
+  -webkit-transform: @transform;
+  -o-transform: @transform;
+  -ms-transform: @transform;
+  -moz-transform: @transform;
+  transform: @transform;
+}
+
+.animation(@animation) {
+  -webkit-animation: (@animation);
+  -o-animation: (@animation);
+  -ms-animation: (@animation);
+  -moz-animation: (@animation);
+  animation: (@animation);
+}
+
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.box-shadow(@box-shadow) {
+  box-shadow: @box-shadow;
+  -ms-box-shadow: @box-shadow;
+  -moz-box-shadow: @box-shadow;
+  -o-box-shadow: @box-shadow;
+  -webkit-box-shadow: @box-shadow;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes lds-dual-ring {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.lds-dual-ring {
+  -webkit-animation-name: lds-dual-ring;
+  animation-name: lds-dual-ring;
+}

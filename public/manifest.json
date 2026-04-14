@@ -1,0 +1,20 @@
+{
+    "name": "Analux - Clube de Semijoias",
+    "short_name": "Analux",
+    "start_url": "/dashboard",
+    "display": "standalone",
+    "background_color": "#FFFCF9",
+    "theme_color": "#FFFCF9",
+    "icons": [
+        {
+            "src": "/favicon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

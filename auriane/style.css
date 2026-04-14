@@ -1,0 +1,45 @@
+@charset "UTF-8";
+/*
+Theme Name: Auriane
+Theme URI: https://auriane.jwsuperthemes.com
+Author: the JWSThemes team
+Author URI: https://jwsuperthemes.com
+Description:Auriane is a handcrafted jewelry for WordPress that has lots of pre-built store demos. This theme would work particularly well for stores selling high-end jewelry and other similar items. However, even if your inventory isn’t top tier, you can still use Auriane to give your jewelry store a premium look. As Auriane has been built around the popular Elementor page builder plugin, opening up the templates of the store demos and editing them through a drag-and-drop interface is very straightforward. This includes the product templates, giving you the option of displaying your items in the way that you want.
+Requires at least: WordPress 4.9.6
+Version: 3.3.9
+License: GNU General Public License v3 or later
+License URI: https://www.gnu.org/licenses/lgpl-3.0.en.html
+Text Domain: auriane
+Tags: one-column, flexible-header, accessibility-ready, custom-colors, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, rtl-language-support, sticky-post, threaded-comments, translation-ready
+*/
+
+:root {
+  --main: #a54201;
+  --secondary: #f1e0d4;
+  --third: #757575;
+  --fourth: #25414e;
+  --light: #ffffff;
+  --dark: #000000;
+  --heading: #040202;
+  --body: #363636;
+  --bodybg: #ffffff;
+  --btn-color: #ffffff;
+  --btn-color2: #ffffff;
+  --btn-bgcolor: #040202;
+  --btn-bgcolor2: #040202;
+  --e-global-color-primary: #a54201;
+  --e-global-color-secondary: #040202;
+  --menu-color: #040202;
+}
+.btn-theme {
+  background: var(--main);
+  color: #ffffff;
+  height: 50px;
+  padding: 0 40px;
+  text-align: center;
+  line-height: 50px;
+}
+
+button.btn-theme {
+  border: 0;
+}

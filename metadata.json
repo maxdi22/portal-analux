@@ -1,0 +1,7 @@
+{
+  "name": "Analux - Clube de Semijoias",
+  "description": "Sistema de assinatura e comunidade exclusiva para clientes Analux, focado em boxes de semijoias recorrentes e curadoria de estilo.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

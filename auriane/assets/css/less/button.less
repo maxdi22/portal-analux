@@ -1,0 +1,97 @@
+.button-default {
+   .btn-main , .jws-cf7-style .wpcf7-submit {
+        background:var(--btn-bgcolor);
+        color:var(--btn-color);
+        border:0;
+        padding-top: 17px;
+        padding-right: 40px;
+        padding-bottom: 17px;
+        padding-left: 40px;
+        font-weight: 500;
+        font-size:16px;
+      &:hover {
+        background:var(--btn-bgcolor2);
+        color:var(--btn-color2);
+      } 
+   }
+}
+
+.button-with_border {
+  .btn-main , .jws-cf7-style .wpcf7-submit {
+      padding: 0 !important;
+     background: var(--secondary); 
+      > span {
+        border: 1px solid #040202;
+        min-width: 160px;
+        padding: 11px 30px;
+        position: relative;
+        transform: translate(12px, -12px);
+        transition: 0.3s all;
+      } 
+      &:hover {
+        > span {
+            border-color: transparent;
+            transform: none;   
+        }
+        background:var(--btn-bgcolor2);
+        color:var(--btn-color2);
+      } 
+   }  
+}
+
+.button-with_line {
+   .btn-main {
+        padding-bottom: 5px;
+            position: relative;
+            &:before , &:after {
+                content: "";
+                height: 1px;
+                background: var(--heading);
+                bottom: 0;
+                position: absolute;
+                transition: 0.3s all;  
+            }
+            &:before {
+               width: 100%;
+               right: 0;  
+               transition-delay: 0.3s;
+            }
+            &:after {
+                width: 0%;
+                left: 0; 
+            }
+            &:hover {
+                &:before {
+                    width:0%;
+                    transition-delay: 0s;
+                }
+                &:after {
+                    width:100%;
+                    transition-delay: 0.3s;
+                }
+            }
+   } 
+}
+
+
+.elementor-button {
+    border-radius:0;
+    position: relative;
+    &:hover {
+        .elementor-align-icon-right {
+               animation: bounceAlpha 1s both; 
+               -webkit-animation: bounceAlpha 1s both;
+        }
+        .elementor-align-icon-left {
+               animation: bounceAlpha2 1s both; 
+               -webkit-animation: bounceAlpha2 1s both;
+        }
+    }
+}
+.elementor-button-content-wrapper {
+      align-items: center;
+}
+
+.jws-button a#custom-buttonbr {
+    overflow: hidden;
+}

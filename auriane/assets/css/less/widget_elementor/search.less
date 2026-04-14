@@ -1,0 +1,205 @@
+.jws_search {
+    position: relative;
+    &.popup { 
+      > button {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        text-align: left;
+        position: relative;
+        line-height: 20px;
+        font-size: 24px;
+        transition: 0s;
+        padding: 0;
+      }
+    }
+    &.icon_left {
+      form {
+        position: relative;
+        .form-loader {
+            display:none;
+        }
+        .s {
+            border: 0;
+            min-height: auto;
+            padding-left: 37px;
+            font-size: 14px;  
+        }
+        button {
+            background: transparent;
+            border: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+      }  
+    }
+}
+
+.jws-ajax-search {
+&.search-loading {
+  .form-loader {
+    .jws-reset-search{
+        opacity:0;
+    }
+    .loader {
+        opacity: 1 !important;
+        transition-delay: 0.25s;
+    } 
+  } 
+}  
+}
+
+.product_search {
+ .form-loader {
+    position: relative;
+    right: 20px;
+    .loader {
+        right: 5px;
+        top: 0;
+        opacity: 0;
+    }
+}   
+}
+
+
+
+
+.form_content_popup {
+    z-index: 99;
+    position: fixed;
+    background: #ffffff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    transition: .3s;
+    z-index: 99999; 
+    opacity: 0;
+    visibility: hidden;
+    overflow-y: auto;
+    .form-content-head {
+        padding: 30px 39px 67px;
+        .heading-form {
+            margin:0;
+        }
+        .close-form {
+          cursor: pointer;
+          float: right;
+          font-size:30px;
+        }
+    }   
+    .jws-search-form {
+     max-width: 1060px;
+     margin: 0 auto; 
+    } 
+    form {
+        position: relative;
+    } 
+    .jws-ajax-search {
+    .form-loader {
+         position: absolute;
+        right: 11px;
+        bottom: 18px;
+        } 
+     .jws-reset-search{
+       cursor: pointer;
+    z-index: 1;
+    position: relative; 
+     }   
+    } 
+    .s {
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        padding-left: 46px;
+        padding-right: 46px;
+        padding-bottom: 20px;
+        border-color: #e3e3e3;
+        border-bottom-width: 2px;
+    }
+   
+    .searchsubmit {
+        background: transparent;
+        border: 0;
+        position: absolute;
+        left: 2px;
+        bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 0;
+        i:before {
+           font-weight: inherit;  
+        }
+    }
+    .list-wrapper {
+        margin-bottom: 91px;
+        ul {
+            padding:0;
+            list-style-type: none;
+            text-align: center;
+            li {
+                display:inline-block;
+                margin: 0 10px;
+                a {
+                    font-size: 18px;
+                    font-weight: 500;
+                    line-height: 25.2px;
+                    opacity: 0.65;
+                    position: relative;
+                    padding-bottom: 3px;
+                    &:before {
+                            content: "";
+                            width: 0;
+                            right: 0;
+                            transition: 0.3s all;
+                            height: 1px;
+                            background: var(--main);
+                            position: absolute;
+                            bottom: 0;
+                    }
+                    &.active {
+                        opacity: 1;
+                        &:before {
+                            width: 100%;
+                            left: 0;
+                            right: initial;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.open {
+      opacity: 1;
+     visibility: visible;   
+    }
+}
+@media(max-width:767px) {
+   .autocomplete-suggestion {
+    -ms-flex: 0 0 100%;
+    flex: 100%;
+    max-width: 100%;
+   } 
+   .form_content_popup {
+    .s {
+       padding-left: 30px;
+       padding-right: 30px;
+    }
+    .searchsubmit {
+   left: 0px;
+    bottom: 21px;
+    font-size: 18px;  
+    }
+    .list-wrapper {
+      display:none;  
+    }  
+    .form-content-head {
+     padding: 10px 10px 17px;  
+     .heading-form {
+        font-size:20px;
+     } 
+    }   
+   } 
+}

@@ -1,0 +1,103 @@
+.map_pin_jws {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50em;
+    background-color:var(--main);
+    > div {
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 50em;
+        opacity: 1;
+        background-color:var(--main);
+        width: 18px;
+        height: 18px; 
+    }
+    &.this {
+      > div  {
+          &:first-child {
+            -webkit-animation: jwsWave 1.5s cubic-bezier(.4,0,.2,1) infinite forwards;
+            animation: jwsWave 1.5s cubic-bezier(.4,0,.2,1) infinite forwards;   
+            }
+            &:last-child {
+                -webkit-animation: jwsWave 1.5s .45s cubic-bezier(0,0,.2,1) infinite forwards;
+                animation: jwsWave 1.5s .45s cubic-bezier(0,0,.2,1) infinite forwards;  
+            }
+      }   
+    }
+}
+
+.jws-infowindow-content {
+    position: relative;
+    padding: 10px;
+    &.has-image {
+       .info-left {
+        padding-right: 55px;
+       }
+       .info-right {
+        position: absolute;
+        right: 0;
+        top: 15px;
+       } 
+    }
+}
+
+.jws-wpsl-search {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    input {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(~"100% - 190px");
+        flex: 0 0 calc(~"100% - 190px");
+        max-width: calc(~"100% - 190px"); 
+        background: transparent;
+        border: 0; 
+        height: 60px; 
+    }
+    button {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 190px;
+        flex: 0 0 190px;
+        max-width: 190px;
+            color: var(--light);
+    border: none;
+    background: var(--heading);
+    height: 60px;   
+    }
+}
+.gm-style-iw button {
+       top: -4px !important;
+    right: 5px !important;
+    opacity: 1 !important;
+    img {
+          width: 20px !important;
+    height: auto !important;  
+    }
+}
+.gm-style .gm-style-iw-c {
+   box-shadow: 0.209px 2.993px 13.8px 1.2px rgba(73, 9, 2, 0.07) !important; 
+}
+.gmnoprint img {
+    max-width: none;
+}
+@media(max-width:767px) {
+  .jws-wpsl-search {
+    display: block;
+    input {
+        width: 100%;
+        max-width: 100%;   
+    }
+    button {
+        width: 100%;
+        max-width: 100%; 
+    }
+  }  
+}

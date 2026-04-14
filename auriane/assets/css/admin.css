@@ -1,0 +1,6 @@
+.jws-variation-gallery-images li  {
+  display: inline-block;  
+}
+.jws-variation-gallery-images li img {
+    max-width:100px;
+}

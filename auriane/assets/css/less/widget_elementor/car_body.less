@@ -1,0 +1,45 @@
+.jws-car-body-item {
+    .car-body {
+        text-align:center;
+        border:1px solid #e9e9e9;
+        transition: 0.3s all;
+        display: table;
+        width: 100%;
+        
+        &:hover {
+            border-color:var(--heading);
+            h4 {
+                color:var(--main);
+            }
+            img {
+                transform: scale(1.1) translateY(-3px);
+        }
+        }
+    }
+    img {
+        transition: 0.3s all;
+    }
+    a {
+       padding: 40px 20px 20px; 
+       display: table-cell;
+        vertical-align: bottom;
+    }
+    h4 {
+      font-size:18px;
+      font-weight: 500; 
+      transition: 0.3s all; 
+      margin: 0;
+    }
+    img {
+        margin-bottom: 15px;
+        max-width: 80%;
+        width: 100%;
+    }
+}
+
+
+@media(max-width:767px) {
+    .jws-car-body-item a {
+      padding: 40px 10px 20px;  
+    }
+}

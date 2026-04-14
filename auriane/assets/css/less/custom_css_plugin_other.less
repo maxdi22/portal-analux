@@ -1,0 +1,210 @@
+/* Elementor Section Custom */
+.shade_animation {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  .shade_wrap_inner {
+    position: absolute;
+    &.alternate {
+      animation-direction: alternate;  
+    }
+    &.infinite {
+      animation-iteration-count: infinite;  
+    }
+  } 
+}
+.jws-shade-yes {
+      > .shade_animation {
+        opacity:1;
+      }  
+}
+.line_animation {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+    > section > .elementor-container {
+        z-index:1;
+    }
+    .line_wrap {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        height: 100%;
+        width: 1px;
+        left: 50%;
+         .line_wrap_inner {
+             position: absolute;
+            -webkit-animation: MoveUpDown 1s infinite;
+            animation: MoveUpDown 10s infinite;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+            left: -2px;
+            width: 5px;
+             .circle_animation {
+                width:5px;
+                height: 5px;
+                background: rgba(255,255,255,0.6);
+                border-radius: 100%;
+                display: block;
+                &:nth-child(2) {
+                    margin-top:285px;
+                }  
+            } 
+         }
+    }
+}
+.jws-line-yes {
+     > .line_animation {
+        opacity:1;
+      }  
+}
+@-webkit-keyframes MoveUpDown {
+  0% {
+    top: -50%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+@keyframes MoveUpDown {
+  0% {
+    top: -50%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+.elementor-social-icon i {
+    transition: 0.3s all; 
+}
+
+body .elementor-social-icon {
+    vertical-align: middle;
+}
+body {
+.elementor-social-icon{
+    background: transparent;
+}
+}
+.elementor-widget-heading .elementor-heading-title {
+    line-height: 1.1;
+}
+.elementor-widget-container p {
+    margin: 0;
+}
+
+.brand_slider_custom {
+    img {
+        opacity:0.5;
+        transition: 0.3s all;
+        &:hover {
+            opacity:1;
+        }
+    }
+}
+/* Contact Form 7 */
+
+
+/* Widget Default Elementor */
+.elementor-accordion-item {
+    overflow: hidden;
+}
+
+
+.elementor-icon-list-items .elementor-icon-list-item .elementor-icon-list-text {
+    transition: 0.3s all;
+}
+.single-elementor_library {
+    .post_sidebar {
+        display:none;
+    }
+    .post_content {
+        -ms-flex: 0 0 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+}
+.jws-particle-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: 0; 
+
+}
+
+
+.elementor-accordion .elementor-tab-content {
+    border-top:0;
+}
+
+
+
+/* Custom Color Default Eleemetor Widget */
+.elementor-element {
+   .elementor-widget-icon-box.elementor-view-framed .elementor-icon, .elementor-widget-icon-box.elementor-view-default .elementor-icon {
+        color:var(--main);
+   } 
+   .elementor-icon-list-items .elementor-icon-list-item:hover .elementor-icon-list-text {
+        color:var(--main);
+   }
+}
+
+.elementor-column-gap-default>.elementor-row>.elementor-column>.elementor-element-populated {
+    padding: 10px 15px;
+}
+.elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-wrapper {
+    display:block !important;
+}
+.elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-item {
+     flex-basis: 0 !important;
+    -webkit-box-flex: 0 !important;
+    -ms-flex-positive: 0 !important;
+    flex-grow: 0 !important;  
+    display: inline-block;
+}
+body[data-elementor-device-mode="mobile"] {
+    .wpcf7-form .apply-form .row  {
+        > .right {
+          padding:0 15px;  
+        }
+        > .left {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.elementor-progress-percentage {
+ top: ~"calc(100% - 33px)";
+    position: absolute;
+    right: 0;   
+    opacity: 0;
+    transition: 0.3s all;
+}
+div[style] {
+   .elementor-progress-percentage {
+    opacity: 1;
+    transition-delay: 0.5s;
+   } 
+}
+.elementor-progress-wrapper {
+    overflow: unset !important;
+}
+.elementor-progress-bar {
+    position: relative;
+}
+.elementor-widget-progress .elementor-title {
+  display: block;
+    margin-bottom: 7px;  
+}
+.elementor-icon-box-description {
+ overflow-wrap: break-word;  
+}

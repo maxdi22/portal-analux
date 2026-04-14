@@ -1,0 +1,52 @@
+.jws-head-filter {
+   .jws-ajax-load {
+      li {
+        display:inline-block;
+        a {
+            color:var(--main); 
+            font-size:14px;
+            font-weight: 500;
+            background:#f2f4fc;
+            display: block;
+            padding: 4px 14px;
+        }
+        .active {
+            background:var(--main);
+            color:#ffffff;  
+        }
+      }  
+   } 
+}
+
+.jws-car-wrap {
+   &.loading {
+     .car-wap {
+       .car-inner {
+         opacity:0.4;
+       
+       } 
+        pointer-events: none;
+       &:after {
+            font-family: 'jws_icon';
+            content: '\e834';
+            top: 0px;
+            animation: MoveCircle360 0.38s infinite linear;
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -18px;
+            margin-top: -18px;
+            font-size: 40px;
+            color: var(--heading);
+       }
+     }
+   } 
+   .car-wap {
+        transition:0.3s all;
+   } 
+}
+
+.compare-empty-car-top , .compare-empty-car-bottom {
+    display: none;
+}

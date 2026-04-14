@@ -1,0 +1,342 @@
+.jws-login-container {
+    .popup-message {display:none;margin-top: 2em;}
+    .jws-password-hint {
+        display:none;
+    }
+    .meter {
+        display: none;
+        .text-meter {
+            margin-left: 10px;
+            color: #b99900;  
+        }
+      
+        .meter-box {
+            margin-top: 20px;
+             margin-bottom: 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            align-items: center;
+            -webkit-align-items: center;
+        }
+
+        span:not(.text-meter) {
+            background:#ebebeb; 
+            height: 3px;
+            width: 35px;
+            position: relative;
+            margin-right: 5px;
+            &:before {
+                content:"";
+                left: 0;
+                top: 0;
+                transition: 0.3s all;
+                width: 0;
+                height: 100%;
+                background:#b99900;
+                position: absolute;
+            }   
+        }
+        span {
+             display:inline-block;
+        }
+        &[meter="1"] {
+          .box1:before {
+            width: 100%;
+          }  
+        }
+        &[meter="2"] {
+          .box1 , .box2 {
+            &:before{
+              width: 100%;  
+            }  
+          }   
+        }
+        &[meter="3"] {
+           .box1 , .box2 , .box3 {
+             &:before{
+              width: 100%; 
+              background: #266b09; 
+            } 
+          } 
+          .text-meter {
+            color: #266b09; 
+          }
+        }
+        &[meter="4"] {
+            .box1 , .box2 , .box3 , .box4 {
+             &:before{
+              width: 100%; 
+              background: #266b09; 
+            } 
+            .text-meter {
+                color: #266b09; 
+             }
+          } 
+        }
+    }
+}
+#jws-login-form {
+    .message {
+           padding: 5px 15px;
+    }   
+    .slick-slide {
+        opacity: 0;
+        transition:0.3s all; 
+        &.slick-active {
+            opacity:1;
+        }
+    } 
+    .slick-track{
+        will-change: unset;    
+    }
+    .jws-login-container {
+        &.loading {
+            .jws-animation {
+                opacity: 0.3 !important;
+                animation: none;
+                pointer-events: none;
+            } 
+        }
+    }
+    .jws-animation {
+          display: inline-block; 
+          width: 100%; 
+          position: relative;
+          overflow: hidden;
+          transition: 0.3s all;
+          .login-width-social {
+            a {
+            height: 50px;
+            width: 100%;
+            border: 2px solid #E8E8EB;
+            text-align: center;
+            display: block;
+            line-height: 45px;
+            font-weight: 500;
+            position: relative;
+            &.jws-connect-google {
+                &:before {
+                   background:no-repeat center/18px url("../assets/image/google-btn-icon.svg"); 
+                }
+            }
+            &.jws-connect-facebook {
+                &:before {
+                      content: "\f09a";
+                      font-family: "Font Awesome 5 Brands";
+                      font-weight: 400;
+                      color: #275C82;
+                }
+            }
+            &:before {
+                content: "";
+                position: absolute;
+                left: 13px;
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                top: 10px;
+            }
+            &:first-child {
+                margin-bottom:16px;
+            }
+            }
+            .social-line {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 17px;
+                margin-bottom: 23px;
+                font-size: 14px;
+                span {
+                    margin: 0 30px;
+                }
+                &:before {
+                    content: "";
+                    flex: 1 0 0%;
+                    border-bottom: 1px solid rgba(113, 116, 136, 0.1);
+                }
+                &:after {
+                    content: "";
+                    flex: 1 0 0%;
+                    border-bottom: 1px solid rgba(113, 116, 136, 0.1);
+                }
+            }
+          }
+         
+
+          form {
+            &[name="registerformpopup"] {
+                .input[name="repeat_password"] {
+                    margin-bottom:0;
+                }
+            }
+            #recaptcha7 {
+               margin-bottom: 20px; 
+               will-change: transform;
+            }
+            #recaptcha8 {
+               margin-bottom: 20px; 
+            }
+            p {
+                margin: 0;
+                margin-bottom: 20px;
+                position: relative;
+                .toggle-password2 {
+                    position: absolute;
+                    right: 16px;
+                    top: 12px;
+                    font-size: 18px;
+                }
+            }
+            .login-submit {
+              margin-top: 23px;
+              margin-bottom: 13px;  
+            }
+            .lost-pass-link {
+                display: block;  
+                float: right;
+                color:var(--main);
+                font-weight: 500;   
+            }
+            input.invalid {
+                  border-color: var(--main);  
+            }
+            .login-remember {
+                label {
+                    margin-bottom:0;
+                    display: inline-block;
+                }
+            }
+            #popupRememberme {
+               display: inline-block;
+               vertical-align: middle;
+               margin-right: 10px;
+               margin-top: -5px;  
+               appearance: none;
+               -webkit-appearance: none;
+               position: relative;
+              &:checked {
+                &:before {
+                   background:#2f76bf;
+                   border-color:#2f76bf;
+                }
+                &:after {
+                    opacity: 1;
+                }
+              }
+              &:after {
+                content: "\f00c";
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                position: absolute;
+                opacity: 0;
+                top: -1px;
+                color: #ffffff;
+                font-size: 10px;
+                left: 5px;
+              }
+              &:before {
+                content:"";
+                width: 20px;
+                height: 20px;
+                border: 1px solid rgba(113, 116, 136, 0.5);
+                border-radius: 3px;
+                display: block;
+              }
+            }
+
+            .button {
+                padding: 0;
+                height: 50px;
+                width: 100%;
+            }
+          }
+          .change-form {
+            text-align: center;
+            color: #757575;
+            display: block;
+            span {
+                color: var(--main);
+                font-weight: 500;
+            }
+          }
+   }
+   .heading-form {
+    text-align: center;
+    margin-bottom: 29px;
+     h4 {
+        display:none;
+     }
+   }
+   &.in-register {
+    .heading-form .heading-form-register {
+        display:block;
+    }
+   }
+   &.in-login {
+    .heading-form .heading-form-login {
+        display:block;
+    }
+   }
+}
+
+.jws-dealer-note {
+ display: inline;
+  vertical-align: middle;   
+}
+
+.login-width-social .nsl-container-buttons {
+	width:100%;
+}
+
+.login-width-social div.nsl-container .nsl-button {
+    height: 100%;
+    box-shadow: none;
+    background: transparent !important;
+    color: var(--heading);
+}
+
+.login-width-social div.nsl-container .nsl-button-default div.nsl-button-label-container {
+	 line-height:26px;
+}
+.login-width-social .nsl-button-facebook svg {
+	width:20px; height:20px;
+}
+.login-width-social .nsl-button-facebook svg path {
+	fill: #275C82;
+}
+
+.page_checkout_modern .cart_item .product-name .name img  {
+	display:none !important;
+}
+
+.jws_toolbar_wishlist {
+	position:relative;
+}
+
+.jws_toolbar_wishlist .jws_wishlist_count {
+    width: 15px;
+    height: 15px;
+    line-height: 15px !important;
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    -webkit-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+    border-radius: 100%;
+    top: -10px;
+    left: 13px;
+    position: absolute;
+    background: var(--main);
+    color: var(--light);
+    z-index: 1;
+}
+
+@media(max-width:767px) {
+  .jws-form-login-popup .jws-form-content {
+    padding: 26px 20px 22px 20px;
+  } 
+}

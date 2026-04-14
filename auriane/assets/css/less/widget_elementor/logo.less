@@ -1,0 +1,25 @@
+.elementor-logo {
+    &.has_logo_sticky {
+      a {
+        position:relative;
+        > span {
+            transition:0.3s all;
+        }
+      }
+      .logo-sticky {
+            display:none;
+      }  
+    }
+}
+.is-sticky , .mega-has-hover {
+    .elementor-logo {
+        &.has_logo_sticky {
+           .logo-inner {
+            display:none;
+           } 
+           .logo-sticky {
+            display:block;
+           } 
+        }
+    }
+}

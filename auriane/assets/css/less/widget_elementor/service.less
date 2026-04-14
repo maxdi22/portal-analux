@@ -1,0 +1,142 @@
+.jws-services-element {
+    .jws-services-layout1 {
+        .jws-services-item-inner {
+            .jws-service-images {
+                    position: absolute;
+                    bottom: 100%;
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: -115px;
+            }
+           .jws-service-content {
+                box-shadow: 0.209px 2.993px 54.28px 4.72px rgba(25, 4, 2, 0.05);
+                background: #ffffff;
+                text-align: center;
+                padding-bottom: 42px;
+                padding-top: 128px;
+                border-radius: 3px;
+           }
+           .jws-service-title {
+                    max-width: 170px;
+                font-size: 18px;
+                margin: 0 auto;
+                line-height: 24px;
+                transition: 0.3s all;
+           }
+           &:hover {
+            .jws-service-title {
+                color:var(--main);
+            }
+           }
+        }
+    }
+    .jws-services-layout2 {
+        .jws_services_item_inner {
+            background: #f5f5f5;
+              
+            h3 {
+                font-size:16px;
+                margin: 0;
+                a {
+                    color:var(--heading);
+                     padding: 15px 28px;
+                     display: block;
+                }
+            }
+        }
+        .active {
+          .jws_services_item_inner { 
+            background: var(--main);
+            h3 a {
+                color:var(--light);
+            }
+          }  
+        }
+    }
+    .jws-services-layout3 {
+        .jws-service-images {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: cover;  
+        }
+        .jws-service-content {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            z-index: 2;
+            padding-left: 38px;
+            padding-bottom: 27px;
+            transition: 0.3s all;
+            transform: translateY(28px);
+            -webkit-transform: translateY(28px);
+            will-change: transform;
+            .jws-service-title {
+                    color: var(--light);
+                    font-weight: 700;
+                    font-size: 20px;
+                    margin-bottom: 7px;
+                    margin-top: -1px;
+            }
+            .jws-service-readmore {
+                    color: var(--light);
+                    display: inline-block;
+                    line-height: 13px;
+                    opacity: 0;
+                    transition: 0.3s all;
+            }
+        }
+        .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+       .jws-services-item-inner {
+            height: 250px;
+            max-width: 475px;
+            position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+     &:hover {
+        .jws-service-content {
+            transform: translateY(0);
+            -webkit-transform: translateY(0);
+            .jws-service-readmore {
+                opacity:1;
+            }    
+        }
+       }
+       }
+       
+         .slick-dots {
+           margin-top: 35px !important;
+                 li {
+                        border: none;
+                        width: 25px;
+                        height: 20px;
+                        margin: 0 5px;
+                        border-radius: 0;
+                        background: transparent !important;
+                        padding-top: 10px;
+                    &.slick-active {
+                    
+                      button {
+                            background: var(--main);
+                      } 
+                    }    
+                    button {
+                        display: block;
+                        border: none;
+                        width: 25px;
+                        height: 2px;
+                        border-radius: 0;
+                        background: #dedede;
+                        font-size: 0;  
+                    }
+                 }
+            }
+       } 
+}

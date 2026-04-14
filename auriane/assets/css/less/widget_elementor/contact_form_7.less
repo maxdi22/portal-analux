@@ -1,0 +1,139 @@
+
+.wpcf7-spinner {
+     position: absolute;
+    margin: 0;
+    margin-top: 10px;   
+}
+div.wpcf7 .ajax-loader {
+    background-image: none;
+           width: 0px;
+            height: 0px;
+            display: block;
+            transition: 0.3s all;
+   &.is-active {
+      transform: scale(1);
+      -webkit-transform: scale(1);
+        width: 30px;
+            height: 30px;
+   }
+}  
+div.wpcf7 .ajax-loader {
+     transform: scale(0);
+     -webkit-transform: scale(0);
+}
+
+div.wpcf7 .ajax-loader {
+    &.is-active {
+          &:after {
+            border: 3px solid #fafafa;
+            border-radius: 50%;
+            border-top: 3px solid #000000;
+            width: 30px;
+            height: 30px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            content: "";
+            display: block;
+            
+      }    
+    }
+}
+.jws-cf7-button-center input.wpcf7-form-control.wpcf7-submit,
+.jws-cf7-button-left input.wpcf7-form-control.wpcf7-submit,
+.jws-cf7-button-right input.wpcf7-form-control.wpcf7-submit,
+.jws-cf7-button-justify input.wpcf7-form-control.wpcf7-submit {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    -js-display: flex;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    width: auto;
+}
+
+.jws-cf7-button-center input.wpcf7-form-control.wpcf7-submit {
+    margin-left:  auto !important;
+    margin-right: auto !important;
+}
+.jws-cf7-button-center .jws-cf7-loader-active {
+    text-align: center;
+}
+
+.jws-cf7-button-left input.wpcf7-form-control.wpcf7-submit {
+    margin-left:  0;
+    margin-right: auto;
+}
+
+.jws-cf7-button-right input.wpcf7-form-control.wpcf7-submit  {
+    margin-left:  auto !important;
+    margin-right: 0 !important;
+}
+.jws-cf7-button-right .jws-cf7-loader-active {
+    text-align: right;
+}
+
+.jws-cf7-button-justify input.wpcf7-form-control.wpcf7-submit {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    width: 100%;
+}
+.jws-cf7-container {
+ .select2.select2-container {
+  width: 100% !important;  
+}   
+}
+
+.jws-cf7-container {
+  input[type="text"], input[type="email"], input[type="tel"], input[type="password"], input[type="url"], input[type="number"], input[type="date"], select {
+        min-height: auto;
+        height: auto;
+  }  
+}
+.wpcf7 form .wpcf7-response-output {
+    margin: 10px 0;
+}
+.jws-cf7-highlight-style-default .wpcf7-not-valid-tip {
+    display: none;
+}
+.form-sign-up p {
+    position: relative;
+    display: flex;
+    .wpcf7-form-control-wrap {
+        margin-right:15px;
+    }
+    button {
+        i {
+           font-size: 25px;
+            margin-left: 15px;
+            vertical-align: middle;
+        }
+    }
+}
+
+.form-sign-up-3 {
+    button {
+        position: absolute;
+        right: 0;
+        top: 0;  
+    }
+}
+@media(max-width:767px) {
+    .form-sign-up p .wpcf7-form-control-wrap {
+         margin-right: 5px;   
+    }
+}
+@media(max-width:360px) {
+  .form-sign-up p {
+    display:block;
+    .wpcf7-submit {
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top:10px;
+    }
+  }  
+ 
+}

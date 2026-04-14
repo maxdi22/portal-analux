@@ -1,0 +1,108 @@
+.jws-menu-list {
+    .menu-list-title {
+        font-size: 14px;
+        font-weight: 500; 
+        color: var(--heading);
+    }
+   ul {
+        list-style-type: none;
+   } 
+   &.toggle-mobile {
+        ul {
+            li:first-child {
+                padding-top:25px;
+            }
+       } 
+   }
+  .elementor-icon-list-icon  {
+        border-radius: 100%;
+    i , svg {
+         width: 1.25em;
+        height: 1.25em;
+        display: block;
+        line-height: 1.25em;
+        text-align: center;      
+    }
+   
+  }  
+  .line_sm {
+    li {
+       a .elementor-icon-list-text {
+        position:relative;
+        &:before {
+                background:var(--heading);
+                content:"";
+                bottom: 0;
+               right:0;
+                transition: 0.3s all;
+                position: absolute;
+                height:1px;
+                width: 0%;
+                transition: 0.3s all;  
+        }
+       } 
+       &:focus , &:hover , &.active {
+            a .elementor-icon-list-text:before {
+                width: 100%;
+                    left: 0;  
+            }
+       }
+    }
+  }  
+  .line_pd {
+    li {
+        transition: 0.3s all;
+         .elementor-icon-list-text {
+           position:relative; 
+           width: auto;
+            &:before {
+                background:var(--main);
+                content:"";
+                bottom: 15%;
+               right:0;
+                transition: 0.3s all;
+                position: absolute;
+                height:10px;
+                width: 0%;
+                transition: 0.3s all;
+           } 
+           span {
+            position: relative;
+            z-index: 1;
+           }
+          
+        }
+        &:focus , &:hover , &.active {
+            transform: translateX(10px);
+            -webkit-transform: translateX(10px);
+           .elementor-icon-list-text  {
+            padding: 0 3px;
+                &:before {
+                   width: 100%;
+                    left: 0;
+                }
+           } 
+        }
+    }
+  }  
+}
+@media(max-width:767px) {
+    .jws-menu-list.toggle-mobile {
+        .menu-list-title {
+            cursor: pointer;
+            margin-bottom: 5px;
+            &:after {
+                font-family: "jws_icon";
+                content: '\eaec';
+                margin-left: 5px;
+                font-size: 18px;
+            }
+        }
+        ul {
+            display:none;
+            li:first-child {
+                padding-top: 10px; 
+            }
+        }
+    } 
+}
