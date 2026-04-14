@@ -258,7 +258,7 @@ const MoodManager: React.FC = () => {
                                                         <Play size={12} className="text-gray-300" />
                                                         <span className="font-medium text-gray-700 flex-1">{song.title}</span>
                                                         {/* Show Icon based on URL type */}
-                                                        {song.url.includes('youtu') ? <span className="text-[10px] bg-red-100 text-red-600 px-1 rounded">YT</span> : <span className="text-[10px] bg-blue-100 text-blue-600 px-1 rounded">MP3</span>}
+                                                        {song.url.includes('youtu') ? <span className="text-[10px] bg-red-100 text-red-600 px-1 rounded">YT</span> : <span className="text-[10px] bg-rose-100 text-rose-600 px-1 rounded">MP3</span>}
                                                         <span className="text-gray-400 text-xs truncate max-w-[100px]">{song.artist}</span>
                                                         <button onClick={() => removeSong(playlist.id, song.id)} className="opacity-0 group-hover:opacity-100 text-red-400 p-1">
                                                             <Trash2 size={12} />

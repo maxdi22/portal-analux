@@ -19,7 +19,9 @@ import {
   CheckCircle2,
   TrendingUp,
   Camera,
-  Trash2
+  Trash2,
+  ShieldAlert,
+  Megaphone
 } from 'lucide-react';
 import { ForumTopic } from '../types';
 import { useUser } from '../context/UserContext';
@@ -71,6 +73,9 @@ const Community: React.FC = () => {
           replies: post.replies || 0,
           images: post.images,
           isPinned: post.is_pinned,
+          isOfficial: post.is_official,
+          isHidden: post.is_hidden,
+          reportsCount: post.reports_count,
           poll: post.poll,
           timestamp: new Date(post.created_at).toLocaleDateString('pt-BR', { hour: '2-digit', minute: '2-digit' }) // Simple formatting
         }));
@@ -137,6 +142,37 @@ const Community: React.FC = () => {
       }
       return t;
     }));
+  };
+
+  const handleReport = async (topicId: string) => {
+    if (!confirm('Deseja denunciar esta postagem para moderação?')) return;
+
+    try {
+      // Create report record
+      const { error: reportError } = await supabase.from('forum_reports').insert({
+        post_id: topicId,
+        reporter_id: user.id,
+        reason: 'Reported by user'
+      });
+
+      if (reportError) throw reportError;
+
+      // Increment reports count on post
+      const post = topics.find(t => t.id === topicId);
+      const newReportsCount = (post?.reportsCount || 0) + 1;
+
+      const { error: postError } = await supabase
+        .from('forum_posts')
+        .update({ reports_count: newReportsCount })
+        .eq('id', topicId);
+
+      if (postError) throw postError;
+
+      alert('Obrigada! Sua denúncia foi enviada para análise da equipe.');
+    } catch (err) {
+      console.error('Error reporting post:', err);
+      alert('Erro ao enviar denúncia.');
+    }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -260,6 +296,9 @@ const Community: React.FC = () => {
   const pinnedPost = topics.find(t => t.isPinned);
 
   const filteredTopics = topics.filter(t => {
+    // Hide reported/hidden content from regular users
+    if (t.isHidden && !user.isAdmin) return false;
+    
     const matchesCategory = activeCategory === 'Todas' || t.category === activeCategory;
     const matchesSearch = t.title.toLowerCase().includes(searchTerm.toLowerCase()) || t.content.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -423,9 +462,27 @@ const Community: React.FC = () => {
         {filteredTopics.length > 0 ? filteredTopics.map((topic, idx) => (
           <article
             key={topic.id}
-            className={`group flex flex-col bg-white rounded-[50px] overflow-hidden transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(83,37,99,0.15)] ${idx % 3 === 0 ? 'md:col-span-2 md:flex-row' : ''
-              } ${topic.isPinned ? 'border-2 border-analux-secondary/20 shadow-xl shadow-analux-secondary/5' : ''}`}
+            onClick={() => {/* Navigate or expand */ }}
+            className={`group bg-white rounded-[60px] overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-2xl transition-all duration-700 border border-analux-secondary/5 relative ${topic.isOfficial ? 'border-amber-400 ring-2 ring-amber-400/20' : ''} ${idx % 3 === 0 ? 'md:col-span-2 md:flex-row' : ''} ${topic.isPinned ? 'border-2 border-analux-secondary/20 shadow-xl shadow-analux-secondary/5' : ''}`}
           >
+            {topic.isHidden && (
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-20 flex items-center justify-center p-10 text-center">
+                <div className="bg-slate-900 text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-xl">
+                  <ShieldAlert size={18} className="text-amber-500" />
+                  <span className="text-xs font-bold uppercase tracking-widest">Conteúdo Sob Análise</span>
+                </div>
+              </div>
+            )}
+
+            {topic.isOfficial && (
+              <div className="absolute top-8 left-1/2 -translate-x-1/2 z-10">
+                <div className="bg-amber-500 text-slate-950 px-4 py-1.5 rounded-full flex items-center gap-2 shadow-lg scale-90">
+                  <Megaphone size={12} />
+                  <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Comunicado Analux</span>
+                </div>
+              </div>
+            )}
+
             {/* Imagem / Poll Placeholder */}
             {(topic.images || topic.poll) && (
               <div className={`relative overflow-hidden ${idx % 3 === 0 ? 'md:w-5/12 h-96 md:h-[500px]' : 'h-80 md:h-[450px]'}`}>
@@ -481,6 +538,16 @@ const Community: React.FC = () => {
                         title="Excluir postagem"
                       >
                         <Trash2 size={14} />
+                      </button>
+                    )}
+
+                    {!user.isAdmin && user.id !== topic.authorId && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleReport(topic.id); }}
+                        className="text-gray-300 hover:text-red-500 transition-colors p-1"
+                        title="Denunciar postagem"
+                      >
+                        <ShieldAlert size={14} />
                       </button>
                     )}
                   </div>

@@ -111,7 +111,7 @@ export interface User {
     isDelivered?: boolean;
   };
   isAdmin?: boolean;
-  role?: 'admin' | 'member';
+  role?: 'superadmin' | 'admin' | 'member';
   referralCode?: string;
   referralStats?: {
     totalInvited: number;
@@ -304,6 +304,52 @@ export interface ForumTopic {
   replies: number;
   timestamp: string;
   isPinned?: boolean;
+  isOfficial?: boolean;
+  isHidden?: boolean;
+  reportsCount?: number;
+}
+
+export interface SubscriberNote {
+  id: string;
+  subscriberId: string;
+  adminId: string;
+  content: string;
+  category: 'Geral' | 'Suporte' | 'Logística' | 'Financeiro' | 'Retenção';
+  createdAt: string;
+}
+
+export interface SubscriberInteraction {
+  id: string;
+  type: 'post' | 'comment' | 'rate' | 'vote' | 'payment_success' | 'payment_failed' | 'box_delivered' | 'admin_note';
+  content: string;
+  date: string;
+  metadata?: any;
+}
+
+export type LeadStage = 'NEW' | 'CONTACTED' | 'QUALIFIED' | 'NEGOTIATION' | 'CONVERTED' | 'LOST';
+
+export interface LeadData {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  stage: LeadStage;
+  source: string;
+  interestLevel: 'Cold' | 'Warm' | 'Hot';
+  expectedValue: number;
+  createdAt: string;
+  lastContact?: string;
+  notes?: any[];
+}
+
+export interface LeadInteraction {
+  id: string;
+  leadId: string;
+  adminId: string;
+  type: 'whatsapp' | 'email' | 'call' | 'note' | 'stage_change';
+  content: string;
+  metadata?: any;
+  createdAt: string;
 }
 
 export interface NavItem {

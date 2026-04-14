@@ -160,7 +160,7 @@ const AdminLogistics: React.FC = () => {
             {/* Stats Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatCard icon={<Box />} label="A Separar" value={stats.pending} color="bg-slate-100 text-slate-600" />
-                <StatCard icon={<ClipboardCheck />} label="Em Montagem" value={stats.assembly} color="bg-blue-100 text-blue-600" />
+                <StatCard icon={<ClipboardCheck />} label="Em Montagem" value={stats.assembly} color="bg-rose-100 text-rose-600" />
                 <StatCard icon={<CheckCircle />} label="Controle Qualidade" value={stats.quality} color="bg-purple-100 text-purple-600" />
                 <StatCard icon={<Truck />} label="Prontos/Enviados" value={stats.ready} color="bg-green-100 text-green-600" />
             </div>
@@ -256,7 +256,7 @@ const AdminLogistics: React.FC = () => {
                                             <div
                                                 className={`h-full transition-all duration-500 ${shipment.verification_level === 3 ? 'bg-green-500' :
                                                     shipment.verification_level === 2 ? 'bg-purple-500' :
-                                                        shipment.verification_level === 1 ? 'bg-blue-500' : 'bg-slate-300'
+                                                        shipment.verification_level === 1 ? 'bg-rose-500' : 'bg-slate-300'
                                                     }`}
                                                 style={{ width: `${(shipment.verification_level / 3) * 100}%` }}
                                             ></div>
@@ -295,7 +295,7 @@ const StatCard = ({ icon, label, value, color }: any) => (
 const StatusBadge = ({ status }: { status: string }) => {
     const map: any = {
         'PENDING': { color: 'bg-slate-100 text-slate-500', label: 'Aguardando' },
-        'ASSEMBLY': { color: 'bg-blue-50 text-blue-600 border-blue-100', label: 'Em Separação' },
+        'ASSEMBLY': { color: 'bg-rose-50 text-rose-600 border-rose-100', label: 'Em Separação' },
         'QUALITY_CHECK': { color: 'bg-purple-50 text-purple-600 border-purple-100', label: 'Conferência' },
         'READY': { color: 'bg-green-50 text-green-600 border-green-100', label: 'Pronto p/ Envio' },
         'SHIPPED': { color: 'bg-emerald-100 text-emerald-800 border-emerald-200', label: 'Despachado' },
@@ -372,7 +372,7 @@ const VerificationModal = ({ shipment, onClose, onUpdate }: any) => {
                 <div className="p-8 flex-1 overflow-y-auto">
                     {step === 1 && (
                         <div className="text-center space-y-6">
-                            <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-full mx-auto flex items-center justify-center mb-4">
+                            <div className="w-20 h-20 bg-rose-50 text-rose-600 rounded-full mx-auto flex items-center justify-center mb-4">
                                 <Package size={40} />
                             </div>
                             <h3 className="text-xl font-bold text-slate-800">Iniciar Separação</h3>
@@ -387,7 +387,7 @@ const VerificationModal = ({ shipment, onClose, onUpdate }: any) => {
                             <button
                                 onClick={() => advanceLevel('ASSEMBLY', 1)}
                                 disabled={loading}
-                                className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
+                                className="w-full py-4 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-rose-500/20 transition-all flex items-center justify-center gap-2"
                             >
                                 {loading ? <RefreshCw className="animate-spin" /> : <CheckCircle />}
                                 Confirmar Separação

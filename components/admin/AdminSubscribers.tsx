@@ -3,6 +3,7 @@ import { Search, Filter, Shield, AlertTriangle, CheckCircle, Loader2, Users } fr
 import { supabase } from '../../services/supabase';
 import { MemberLevel } from '../../types';
 import SubscriberActions from './SubscriberActions';
+import Subscriber360Drawer from './Subscriber360Drawer';
 
 interface SubscriberData {
     id: string;
@@ -14,6 +15,9 @@ interface SubscriberData {
     ltv: number;
     risk: string;
     avatar?: string;
+    phone?: string;
+    address?: any;
+    role?: string;
 }
 
 const AdminSubscribers: React.FC = () => {
@@ -21,6 +25,7 @@ const AdminSubscribers: React.FC = () => {
     const [statusFilter, setStatusFilter] = useState('all'); // Added State
     const [subscribers, setSubscribers] = useState<SubscriberData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedSubId, setSelectedSubId] = useState<string | null>(null);
 
     useEffect(() => {
         fetchSubscribers();
@@ -70,8 +75,11 @@ const AdminSubscribers: React.FC = () => {
                     plan: planName,
                     status: sub?.status || 'no_subscription',
                     joined: joinedDate,
-                    ltv: profile.lifetime_points || 0, // Using points as proxy for LTV for now, or calculate from payment history
-                    risk: 'low' // Placeholder calculation
+                    ltv: profile.lifetime_points || 0,
+                    risk: 'low',
+                    phone: profile.phone,
+                    address: profile.address,
+                    role: profile.role
                 };
             });
 
@@ -167,12 +175,17 @@ const AdminSubscribers: React.FC = () => {
                                 <th className="px-6 py-4">Desde</th>
                                 <th className="px-6 py-4">LTV Est.</th>
                                 <th className="px-6 py-4">Risco Churn</th>
+                                <th className="px-6 py-4 text-center">Role</th>
                                 <th className="px-6 py-4 text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
                             {filteredSubscribers.map((sub) => (
-                                <tr key={sub.id} className="hover:bg-slate-50 transition-colors">
+                                <tr 
+                                    key={sub.id} 
+                                    className="hover:bg-slate-50 transition-all cursor-pointer group"
+                                    onClick={() => setSelectedSubId(sub.id)}
+                                >
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden">
@@ -183,7 +196,19 @@ const AdminSubscribers: React.FC = () => {
                                                 )}
                                             </div>
                                             <div>
-                                                <div className="font-bold text-slate-900">{sub.name}</div>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="font-bold text-slate-900">{sub.name}</div>
+                                                    {sub.role === 'superadmin' && (
+                                                        <span className="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-bold rounded border border-rose-200 flex items-center gap-1">
+                                                            <Shield size={10} /> MASTER
+                                                        </span>
+                                                    )}
+                                                    {sub.role === 'admin' && (
+                                                        <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded border border-blue-200">
+                                                            ADMIN
+                                                        </span>
+                                                    )}
+                                                </div>
                                                 <div className="text-xs text-slate-400">{sub.email}</div>
                                             </div>
                                         </div>
@@ -198,6 +223,9 @@ const AdminSubscribers: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <RiskBadge risk={sub.risk} />
+                                    </td>
+                                    <td className="px-6 py-4 text-center">
+                                        <RoleBadge role={sub.role || 'member'} />
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <SubscriberActions subscriber={sub} onUpdate={fetchSubscribers} />
@@ -214,6 +242,13 @@ const AdminSubscribers: React.FC = () => {
                     </div>
                 )}
             </div>
+            {/* Subscriber 360 Drawer */}
+            {selectedSubId && (
+                <Subscriber360Drawer 
+                    subscriberId={selectedSubId} 
+                    onClose={() => setSelectedSubId(null)} 
+                />
+            )}
         </div>
     );
 };
@@ -246,6 +281,26 @@ const RiskBadge = ({ risk }: { risk: string }) => {
     if (risk === 'low') return <div className="flex items-center gap-1 text-green-600 text-xs font-bold"><Shield size={14} /> Baixo</div>;
     if (risk === 'medium') return <div className="flex items-center gap-1 text-amber-500 text-xs font-bold"><AlertTriangle size={14} /> Médio</div>;
     return <div className="flex items-center gap-1 text-red-500 text-xs font-bold"><AlertTriangle size={14} /> Alto</div>;
+}
+
+const RoleBadge = ({ role }: { role: string }) => {
+    const styles: Record<string, string> = {
+        superadmin: 'bg-rose-50 text-rose-700 border-rose-200',
+        admin: 'bg-blue-50 text-blue-700 border-blue-200',
+        member: 'bg-slate-50 text-slate-500 border-slate-100'
+    };
+
+    const labels: Record<string, string> = {
+        superadmin: 'MASTER',
+        admin: 'ADMIN',
+        member: 'Assinante'
+    };
+
+    return (
+        <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black border uppercase tracking-widest ${styles[role] || styles.member}`}>
+            {labels[role] || role}
+        </span>
+    );
 }
 
 export default AdminSubscribers;

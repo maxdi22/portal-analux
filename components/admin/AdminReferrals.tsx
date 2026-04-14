@@ -6,7 +6,10 @@ import {
     Search,
     Download,
     Crown,
-    ArrowUpRight
+    ArrowUpRight,
+    Target,
+    MoreHorizontal,
+    UserPlus
 } from 'lucide-react';
 import { supabase } from '../../services/supabase';
 
@@ -69,6 +72,36 @@ const AdminReferrals: React.FC = () => {
         }
     };
 
+    const handleSendToCRM = async (stat: ReferralStat) => {
+        try {
+            // Check if exists
+            const { data } = await supabase
+                .from('leads')
+                .select('id')
+                .or(`email.eq.${stat.email}`)
+                .limit(1);
+
+            if (data && data.length > 0) {
+                alert("Este embaixador já está no CRM.");
+                return;
+            }
+
+            const { error } = await supabase.from('leads').insert({
+                name: stat.name,
+                email: stat.email,
+                stage: 'NEGOTIATION', // High value partners
+                source: 'Programa de Indicação',
+                interest_level: 'Hot',
+                notes: [`Embaixador com ${stat.referral_count} indicações enviado para parceria em ${new Date().toLocaleDateString()}`]
+            });
+
+            if (error) throw error;
+            alert(`${stat.name} enviado para etapa de Negociação no CRM!`);
+        } catch (err: any) {
+            alert("Erro: " + err.message);
+        }
+    };
+
     const filteredStats = stats.filter(s =>
         s.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         s.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -106,7 +139,7 @@ const AdminReferrals: React.FC = () => {
                     </div>
                 </div>
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4">
-                    <div className="p-3 bg-blue-100 text-blue-600 rounded-lg">
+                    <div className="p-3 bg-rose-100 text-rose-600 rounded-lg">
                         <ArrowUpRight size={24} />
                     </div>
                     <div>
@@ -162,6 +195,7 @@ const AdminReferrals: React.FC = () => {
                                 <th className="px-6 py-4 text-center">Online Agora</th>
                                 <th className="px-6 py-4 text-center">Conversões</th>
                                 <th className="px-6 py-4">Crédito Acumulado</th>
+                                <th className="px-6 py-4 text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -227,6 +261,20 @@ const AdminReferrals: React.FC = () => {
                                         </td>
                                         <td className="px-6 py-4 font-bold text-green-600">
                                             R$ {(stat.referral_count * 20).toFixed(2)}
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <div className="flex justify-end gap-2">
+                                                <button 
+                                                    onClick={() => handleSendToCRM(stat)}
+                                                    className="p-2 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all"
+                                                    title="Enviar para CRM"
+                                                >
+                                                    <Target size={18} />
+                                                </button>
+                                                <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all">
+                                                    <MoreHorizontal size={18} />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))

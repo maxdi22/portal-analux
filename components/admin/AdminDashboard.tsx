@@ -31,10 +31,10 @@ const AdminDashboard: React.FC = () => {
 
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
-                        <div className="p-3 bg-blue-100 text-blue-600 rounded-lg">
+                        <div className="p-3 bg-analux-primary/10 text-analux-primary rounded-lg">
                             <Users size={24} />
                         </div>
-                        <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">+24 novos</span>
+                        <span className="text-xs font-semibold text-rose-500 bg-rose-50 px-2 py-1 rounded-full">+24 novos</span>
                     </div>
                     <span className="text-slate-500 text-sm font-medium">Assinantes Ativos</span>
                     <span className="text-3xl font-bold text-slate-800">1,248</span>
@@ -73,7 +73,7 @@ const AdminDashboard: React.FC = () => {
                             <AlertCircle size={20} className="text-amber-500" />
                             Atenção Operacional
                         </h3>
-                        <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">Ver tudo</button>
+                        <button className="text-sm text-analux-primary hover:text-black font-medium">Ver tudo</button>
                     </div>
                     <div className="p-0">
                         <table className="w-full text-sm text-left">
@@ -90,19 +90,19 @@ const AdminDashboard: React.FC = () => {
                                     <td className="px-6 py-4">Falha Pagamento</td>
                                     <td className="px-6 py-4 font-medium">Mariana Silva</td>
                                     <td className="px-6 py-4"><span className="bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-bold">RETRY 2/3</span></td>
-                                    <td className="px-6 py-4"><button className="text-blue-600 font-medium hover:underline">Resolver</button></td>
+                                    <td className="px-6 py-4"><button className="text-analux-primary font-medium hover:underline">Resolver</button></td>
                                 </tr>
                                 <tr>
                                     <td className="px-6 py-4">Endereço Inválido</td>
                                     <td className="px-6 py-4 font-medium">Carla Dias</td>
                                     <td className="px-6 py-4"><span className="bg-amber-100 text-amber-600 px-2 py-1 rounded text-xs font-bold">Retido</span></td>
-                                    <td className="px-6 py-4"><button className="text-blue-600 font-medium hover:underline">Verificar</button></td>
+                                    <td className="px-6 py-4"><button className="text-analux-primary font-medium hover:underline">Verificar</button></td>
                                 </tr>
                                 <tr>
                                     <td className="px-6 py-4">Churn Risco Alto</td>
                                     <td className="px-6 py-4 font-medium">Beatriz Costa</td>
                                     <td className="px-6 py-4"><span className="bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs font-bold">NPS 4</span></td>
-                                    <td className="px-6 py-4"><button className="text-blue-600 font-medium hover:underline">Contactar</button></td>
+                                    <td className="px-6 py-4"><button className="text-analux-primary font-medium hover:underline">Contactar</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -124,7 +124,7 @@ const AdminDashboard: React.FC = () => {
                                 <span className="font-bold text-slate-700">92%</span>
                             </div>
                             <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-500 w-[92%]"></div>
+                                <div className="h-full bg-analux-primary w-[92%]"></div>
                             </div>
                         </div>
 

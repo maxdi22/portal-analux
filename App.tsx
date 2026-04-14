@@ -11,6 +11,7 @@ import ConnectedStore from './components/ConnectedStore';
 // import Editorial from './components/Editorial';
 import LandingPage from './components/LandingPage';
 import LandingPageB from './components/LandingPageB';
+import LandingPageC from './components/LandingPageC';
 import DigitalVault from './components/DigitalVault';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -20,6 +21,16 @@ import AdminLogistics from './components/admin/logistics/AdminLogistics';
 import BoxesDashboard from './components/admin/boxes/BoxesDashboard';
 import CreateBox from './components/admin/boxes/CreateBox';
 import MarketingCampaigns from './components/admin/MarketingCampaigns';
+
+// Novas Importações Admin
+import AdminStock from './components/admin/AdminStock';
+import AdminFinance from './components/admin/AdminFinance';
+import AdminPlans from './components/admin/AdminPlans';
+import AdminRetention from './components/admin/AdminRetention';
+import AdminReports from './components/admin/AdminReports';
+import AdminSettings from './components/admin/AdminSettings';
+import AdminCommunity from './components/admin/AdminCommunity';
+import AdminLeads from './components/admin/AdminLeads';
 
 import { UserProvider, useUser } from './context/UserContext';
 import { ToastProvider } from './context/ToastContext';
@@ -74,6 +85,7 @@ const AppContent: React.FC = () => {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/lp-b" element={<LandingPageB />} />
+      <Route path="/lp-c" element={<LandingPageC />} />
       <Route path="/convite/:code" element={<LandingPage />} />
 
       <Route element={<ProtectedLayout />}>
@@ -97,6 +109,7 @@ const AppContent: React.FC = () => {
         <Route index element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="subscribers" element={<AdminSubscribers />} />
+        <Route path="leads" element={<AdminLeads />} />
         <Route path="referrals" element={<AdminReferrals />} />
 
         {/* Logistics Module */}
@@ -109,7 +122,16 @@ const AppContent: React.FC = () => {
         {/* Marketing Module */}
         <Route path="marketing" element={<MarketingCampaigns />} />
 
-        {/* Placeholder for other admin routes */}
+        {/* Novos Módulos Admin */}
+        <Route path="stock" element={<AdminStock />} />
+        <Route path="finance" element={<AdminFinance />} />
+        <Route path="plans" element={<AdminPlans />} />
+        <Route path="retention" element={<AdminRetention />} />
+        <Route path="reports" element={<AdminReports />} />
+        <Route path="settings" element={<AdminSettings />} />
+        <Route path="community" element={<AdminCommunity />} />
+
+        {/* Fallback for other admin routes */}
         <Route path="*" element={<div className="p-10 text-slate-500">Módulo em construção...</div>} />
       </Route>
     </Routes>

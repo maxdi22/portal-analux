@@ -691,7 +691,7 @@ const CreateBox = () => {
                         </div>
                     </div>
 
-                    <div className="p-4 bg-blue-50 text-blue-800 rounded-xl text-sm flex gap-3">
+                    <div className="p-4 bg-rose-50 text-rose-800 rounded-xl text-sm flex gap-3">
                         <PieChart size={20} className="shrink-0" />
                         <p>Esta edição tem <strong>alta afinidade (88%)</strong> com o perfil "Romântico" e "Clássico", o que deve aumentar a retenção nestes grupos.</p>
                     </div>
@@ -722,7 +722,7 @@ const CreateBox = () => {
                     </h3>
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600"><Sparkles size={18} /></div>
+                            <div className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center text-rose-600"><Sparkles size={18} /></div>
                             <div className="flex-1">
                                 <label className="text-xs font-bold text-gray-400 uppercase">Início dos Envios (Vigência)</label>
                                 <input type="date" className="block w-full text-sm font-medium mt-1 border-none p-0 focus:ring-0"

@@ -14,7 +14,8 @@ import {
     FileText,
     LogOut,
     ArrowLeft,
-    Megaphone
+    Megaphone,
+    Target
 } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 
@@ -25,6 +26,7 @@ const SidebarAdmin: React.FC = () => {
     const menuItems = [
         { id: 'dashboard', path: '/admin/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
         { id: 'subscribers', path: '/admin/subscribers', label: 'Assinantes', icon: <Users size={20} /> },
+        { id: 'leads', path: '/admin/leads', label: 'CRM de Leads', icon: <Target size={20} className="text-amber-500" /> },
         { id: 'referrals', path: '/admin/referrals', label: 'Indicações', icon: <Users size={20} className="text-amber-500" /> }, // Reused icon or new one
         { id: 'plans', path: '/admin/plans', label: 'Planos & Produtos', icon: <Layers size={20} /> },
         { id: 'boxes', path: '/admin/boxes', label: 'Boxes & Edições', icon: <Package size={20} /> },
@@ -33,7 +35,7 @@ const SidebarAdmin: React.FC = () => {
         { id: 'finance', path: '/admin/finance', label: 'Financeiro', icon: <CreditCard size={20} /> },
         { id: 'retention', path: '/admin/retention', label: 'Retenção', icon: <BarChart2 size={20} /> },
         { id: 'marketing', path: '/admin/marketing', label: 'Marketing', icon: <Megaphone size={20} /> },
-        { id: 'content', path: '/admin/content', label: 'Comunidade', icon: <MessageSquare size={20} /> },
+        { id: 'content', path: '/admin/community', label: 'Comunidade', icon: <MessageSquare size={20} /> },
         { id: 'reports', path: '/admin/reports', label: 'Relatórios', icon: <FileText size={20} /> },
         { id: 'settings', path: '/admin/settings', label: 'Configurações', icon: <Settings size={20} /> },
     ];

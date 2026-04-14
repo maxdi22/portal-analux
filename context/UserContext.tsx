@@ -256,7 +256,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                     })) || [],
                     onboardingCompleted: profile.onboarding_completed,
                     role: profile.role || 'member',
-                    isAdmin: profile.role === 'admin' || ['maxdi.brasil@gmail.com', 'anaiara.adv@hotmail.com', 'maxdi.agency@gmail.com'].includes(profile.email || authUser?.email || ''),
+                    isAdmin: (profile.role === 'admin' || profile.role === 'superadmin') || ['maxdi.brasil@gmail.com', 'anaiara.adv@hotmail.com', 'maxdi.agency@gmail.com'].includes(profile.email || authUser?.email || ''),
                     referralCode: finalRefCode,
                     referralStats: {
                         totalInvited: profile.referral_count || 0,
