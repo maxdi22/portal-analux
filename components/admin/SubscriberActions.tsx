@@ -18,7 +18,9 @@ import {
     ShieldAlert,
     Loader2,
     LayoutDashboard,
-    Target
+    Target,
+    Eye,
+    EyeOff
 } from 'lucide-react';
 import { supabase } from '../../services/supabase';
 import { useUser } from '../../context/UserContext';
@@ -39,6 +41,7 @@ const SubscriberActions: React.FC<SubscriberActionsProps> = ({ subscriber, onUpd
     const [showEditModal, setShowEditModal] = useState(false);
     const [showPlanModal, setShowPlanModal] = useState(false);
     const [showCouponModal, setShowCouponModal] = useState(false);
+    const [showManualPasswordModal, setShowManualPasswordModal] = useState(false);
 
     // Edit Form States
     const [editName, setEditName] = useState(subscriber.name || '');
@@ -88,6 +91,11 @@ const SubscriberActions: React.FC<SubscriberActionsProps> = ({ subscriber, onUpd
                     if (pwdError) throw pwdError;
                     alert(`Email de redefinição de senha enviado para ${subscriber.email}`);
                     break;
+
+                case 'manual_password':
+                    setShowManualPasswordModal(true);
+                    setLoading(false);
+                    return;
 
                 case 'open_ticket':
                     window.location.href = `mailto:${subscriber.email}?subject=Suporte Analux&body=Olá ${subscriber.name},`;
@@ -279,7 +287,13 @@ const SubscriberActions: React.FC<SubscriberActionsProps> = ({ subscriber, onUpd
                             onClick={(e) => handleAction('reset_password', e)}
                             className="w-full text-left px-4 py-3 hover:bg-slate-50 flex items-center gap-3 text-sm text-slate-700"
                         >
-                            <Key size={16} className="text-slate-500" /> Redefinir Senha
+                            <Key size={16} className="text-slate-500" /> Enviar E-mail de Recuperação
+                        </button>
+                        <button
+                            onClick={(e) => handleAction('manual_password', e)}
+                            className="w-full text-left px-4 py-3 hover:bg-slate-50 flex items-center gap-3 text-sm text-slate-700"
+                        >
+                            <ShieldAlert size={16} className="text-rose-500" /> Alterar Senha Manual
                         </button>
                     </div>
                 </div>
@@ -358,7 +372,38 @@ const SubscriberActions: React.FC<SubscriberActionsProps> = ({ subscriber, onUpd
                         }
                     }}
                     onResetPassword={() => handleAction('reset_password', { stopPropagation: () => { } } as any)}
+                    onManualPassword={() => setShowManualPasswordModal(true)}
                     currentUser={currentUser}
+                />
+            )}
+
+            {/* Manual Password Modal */}
+            {showManualPasswordModal && (
+                <ManualPasswordModal
+                    subscriber={subscriber}
+                    onClose={() => setShowManualPasswordModal(false)}
+                    onSave={async (newPassword) => {
+                        const { data: sessionData } = await supabase.auth.getSession();
+                        const token = sessionData.session?.access_token;
+                        console.log('[SubscriberActions] Calling admin-ops, token length:', token?.length || 0);
+
+                        const { data, error } = await supabase.functions.invoke('admin-ops', {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            },
+                            body: {
+                                action: 'update_password',
+                                targetUserId: subscriber.id,
+                                newPassword: newPassword
+                            }
+                        });
+
+                        if (error) throw error;
+                        if (data?.error) throw new Error(data.error);
+
+                        alert('Senha alterada com sucesso!');
+                        setShowManualPasswordModal(false);
+                    }}
                 />
             )}
         </div>
@@ -371,10 +416,11 @@ interface EditProfileModalProps {
     onClose: () => void;
     onSave: (data: any) => Promise<void>;
     onResetPassword: () => void;
+    onManualPassword: () => void;
     currentUser: any;
 }
 
-const EditProfileModal: React.FC<EditProfileModalProps> = ({ subscriber, initialData, onClose, onSave, onResetPassword, currentUser }) => {
+const EditProfileModal: React.FC<EditProfileModalProps> = ({ subscriber, initialData, onClose, onSave, onResetPassword, onManualPassword, currentUser }) => {
     const [name, setName] = useState(initialData.name);
     const [phone, setPhone] = useState(initialData.phone);
     const [role, setRole] = useState(initialData.role);
@@ -445,9 +491,18 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ subscriber, initial
                         <label className="block text-sm font-medium text-slate-700 mb-2">Segurança</label>
                         <button
                             onClick={onResetPassword}
-                            className="w-full flex items-center justify-center gap-2 py-2 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors text-sm font-medium"
+                            className="w-full flex items-center justify-center gap-2 py-2 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors text-sm font-medium mb-2"
                         >
                             <Key size={16} /> Enviar Email de Redefinição de Senha
+                        </button>
+                        <button
+                            onClick={() => {
+                                onClose();
+                                onManualPassword();
+                            }}
+                            className="w-full flex items-center justify-center gap-2 py-2 border border-rose-100 bg-rose-50/30 rounded-lg text-rose-600 hover:bg-rose-50 transition-colors text-sm font-medium"
+                        >
+                            <ShieldAlert size={16} /> Alterar Senha Manual
                         </button>
                     </div>
                 </div>
@@ -612,6 +667,80 @@ const IssueCouponModal: React.FC<{ onClose: () => void, onIssue: (data: any) => 
                     >
                         {saving && <Loader2 size={16} className="animate-spin" />}
                         Gerar Cupom
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const ManualPasswordModal: React.FC<{ subscriber: any, onClose: () => void, onSave: (pwd: string) => Promise<void> }> = ({ subscriber, onClose, onSave }) => {
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+    const handleSave = async () => {
+        if (!password || password.length < 6) {
+            alert('A senha deve ter pelo menos 6 caracteres.');
+            return;
+        }
+        setSaving(true);
+        try {
+            await onSave(password);
+        } catch (err: any) {
+            alert(err.message);
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    return (
+        <div 
+            className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+            }}
+        >
+            <div className="bg-white rounded-[32px] p-8 w-full max-w-sm shadow-2xl animate-in zoom-in-95" onClick={e => e.stopPropagation()}>
+                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center mb-6">
+                    <ShieldAlert size={32} className="text-rose-500" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Alterar Senha</h3>
+                <p className="text-slate-500 mb-8 text-sm">Defina uma nova senha de acesso para <b>{subscriber.name}</b>.</p>
+                <div className="space-y-4">
+                    <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-1">Nova Senha</label>
+                        <div className="relative">
+                            <input 
+                                type={showPassword ? "text" : "password"} 
+                                className="w-full p-3 bg-slate-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-rose-500/20 outline-none pr-10" 
+                                placeholder="Mínimo 6 caracteres" 
+                                value={password} 
+                                onChange={e => setPassword(e.target.value)} 
+                                autoComplete="new-password"
+                            />
+                            <button 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowPassword(!showPassword);
+                                }}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                            >
+                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3 mt-10">
+                    <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="py-3 text-slate-400 font-bold text-sm hover:text-slate-600">Cancelar</button>
+                    <button 
+                        onClick={(e) => { e.stopPropagation(); handleSave(); }} 
+                        disabled={saving}
+                        className="py-3 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
+                    >
+                        {saving && <Loader2 size={16} className="animate-spin" />}
+                        Confirmar
                     </button>
                 </div>
             </div>
