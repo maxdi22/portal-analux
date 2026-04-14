@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Shield, AlertTriangle, CheckCircle, Loader2, Users } from 'lucide-react';
+import { Search, Filter, Shield, AlertTriangle, CheckCircle, Loader2, Users, UserPlus } from 'lucide-react';
 import { supabase } from '../../services/supabase';
 import { MemberLevel } from '../../types';
 import SubscriberActions from './SubscriberActions';
 import Subscriber360Drawer from './Subscriber360Drawer';
+import CreateSubscriberModal from './CreateSubscriberModal';
 
 interface SubscriberData {
     id: string;
@@ -22,10 +23,11 @@ interface SubscriberData {
 
 const AdminSubscribers: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [statusFilter, setStatusFilter] = useState('all'); // Added State
+    const [statusFilter, setStatusFilter] = useState('all');
     const [subscribers, setSubscribers] = useState<SubscriberData[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedSubId, setSelectedSubId] = useState<string | null>(null);
+    const [showCreateModal, setShowCreateModal] = useState(false);
 
     useEffect(() => {
         fetchSubscribers();
@@ -111,7 +113,13 @@ const AdminSubscribers: React.FC = () => {
                 </div>
                 <div className="flex gap-3">
                     <button className="px-4 py-2 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">Exportar CSV</button>
-                    <button className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 font-bold shadow-sm">Novo Assinante</button>
+                    <button
+                        id="btn-novo-assinante"
+                        onClick={() => setShowCreateModal(true)}
+                        className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 font-bold shadow-sm transition-all"
+                    >
+                        <UserPlus size={16} /> Novo Assinante
+                    </button>
                 </div>
             </div>
 
@@ -248,6 +256,17 @@ const AdminSubscribers: React.FC = () => {
                 <Subscriber360Drawer 
                     subscriberId={selectedSubId} 
                     onClose={() => setSelectedSubId(null)} 
+                />
+            )}
+
+            {/* Create Subscriber Modal */}
+            {showCreateModal && (
+                <CreateSubscriberModal
+                    onClose={() => setShowCreateModal(false)}
+                    onSuccess={() => {
+                        fetchSubscribers();
+                        setShowCreateModal(false);
+                    }}
                 />
             )}
         </div>
