@@ -49,6 +49,15 @@
     .font-serif {
       font-family: 'Playfair Display', serif;
     }
+
+    /* Hide scrollbar but keep scroll functional */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Smooth snap scroll */
+    .snap-x { scroll-snap-type: x mandatory; }
+    .snap-start { scroll-snap-align: start; }
+    .snap-mandatory { scroll-snap-type: x mandatory; }
   </style>
   <script type="importmap">
 {

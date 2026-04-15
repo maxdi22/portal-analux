@@ -107,8 +107,10 @@ const DashboardHome: React.FC = () => {
   }, [user.email]);
 
   return (
-    <div className="space-y-8 animate-fadeIn pb-20">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div className="space-y-5 animate-fadeIn pb-20">
+
+      {/* ── Mobile Hero Header ── */}
+      <header className="md:flex hidden flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-serif text-analux-primary mb-1">Olá, {user.name}</h1>
           <p className="text-gray-500 text-sm">Seu brilho Analux está a caminho.</p>
@@ -122,126 +124,159 @@ const DashboardHome: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Stats & Quick Actions Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
-        {/* Cashback - Wider */}
-        <div className="lg:col-span-3 bg-white p-6 rounded-3xl border border-gray-50 shadow-sm flex flex-col justify-between">
-          <div className="flex justify-between items-start">
+      {/* ── Mobile-only greeting ── */}
+      <div className="md:hidden flex items-center justify-between">
+        <div>
+          <p className="text-[11px] text-gray-400 uppercase tracking-widest font-bold">Bem-vinda de volta</p>
+          <h1 className="text-2xl font-serif text-analux-primary leading-tight mt-0.5">
+            {user.name.split(' ')[0]} ✨
+          </h1>
+        </div>
+        <div className="flex items-center gap-2 bg-white rounded-2xl px-3 py-2 shadow-sm border border-gray-100">
+          <img src={user.avatar} alt="Avatar" className="w-8 h-8 rounded-xl object-cover" />
+          <div>
+            <p className="text-[10px] font-bold text-analux-primary leading-none">{user.level}</p>
+            <p className="text-[9px] text-analux-secondary uppercase tracking-wider mt-0.5">Musa</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Stats Cards: horizontal scroll on mobile, grid on desktop ── */}
+      <div className="-mx-4 md:mx-0 px-4 md:px-0">
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4 overflow-x-auto pb-2 snap-x snap-mandatory no-scrollbar">
+
+          {/* Subscription Card */}
+          <div
+            onClick={() => !user.subscription || user.subscription.status !== 'ACTIVE'
+              ? setShowReactivationModal(true)
+              : navigate('/box')}
+            className={`snap-start shrink-0 w-[160px] md:w-auto lg:col-span-2 p-4 md:p-5 rounded-2xl md:rounded-3xl flex flex-col justify-between cursor-pointer active:scale-95 transition-all duration-200 min-h-[130px] md:min-h-[140px] shadow-sm ${
+              user.subscription?.status === 'ACTIVE'
+                ? 'bg-gradient-to-br from-analux-primary to-analux-dark text-white'
+                : user.subscription?.status === 'PAUSED'
+                  ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
+                  : 'bg-white border border-gray-100'
+            }`}
+          >
+            <div className="flex justify-between items-start">
+              <div className={`w-9 h-9 flex items-center justify-center rounded-xl ${
+                user.subscription?.status === 'ACTIVE'
+                  ? 'bg-white/15'
+                  : user.subscription?.status === 'PAUSED'
+                    ? 'bg-white/20'
+                    : 'bg-gray-100'
+              }`}>
+                <Package size={18} className={
+                  user.subscription?.status ? 'text-white' : 'text-gray-400'
+                } />
+              </div>
+              {user.subscription?.status === 'ACTIVE' && (
+                <span className="text-[8px] font-bold bg-white/20 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Ativa</span>
+              )}
+              {user.subscription?.status === 'PAUSED' && (
+                <span className="text-[8px] font-bold bg-white/20 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Pausada</span>
+              )}
+            </div>
             <div>
-              <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Saldo de Cashback</span>
-              {!user.isStoreConnected ? (
-                <div className="flex flex-col mt-1">
-                  <p className="text-2xl font-serif text-gray-300">R$ 0,00</p>
-                  <span className="text-[9px] text-red-400 font-bold flex items-center gap-1 animate-pulse"><LinkIcon size={8} /> Conecte sua conta</span>
-                </div>
-              ) : (
-                <p className="text-2xl font-serif text-analux-primary mt-1">R$ {user.cashback.toFixed(2)}</p>
-              )}
-            </div>
-            <div className="p-2 bg-analux-secondary/10 rounded-xl text-analux-secondary">
-              <ShoppingBag size={18} />
+              <p className={`text-[10px] font-bold uppercase tracking-wider mb-0.5 ${
+                user.subscription?.status ? 'text-white/70' : 'text-gray-400'
+              }`}>Assinatura</p>
+              <p className={`text-sm font-bold leading-tight ${
+                user.subscription?.status ? 'text-white' : 'text-analux-primary'
+              }`}>
+                {user.subscription?.status === 'ACTIVE'
+                  ? `Plano ${user.subscription.plan}`
+                  : user.subscription?.status === 'PAUSED'
+                    ? 'Toque p/ reativar'
+                    : 'Toque p/ assinar'}
+              </p>
             </div>
           </div>
-          <button
-            onClick={() => navigate('/shop')}
-            className="text-[9px] font-bold text-analux-secondary uppercase mt-3 flex items-center gap-1 hover:underline"
-          >
-            Usar na Loja <ArrowUpRight size={10} />
-          </button>
-        </div>
 
-        {/* Points - Wider */}
-        <div className="lg:col-span-3 bg-white p-6 rounded-3xl border border-gray-50 shadow-sm flex flex-col justify-between">
-          <div className="flex justify-between items-start">
-            <div className="w-full mr-4">
-              <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Pontos Club</span>
-              {!user.isStoreConnected ? (
-                <div className="mt-1 mb-2">
-                  <p className="text-2xl font-serif text-gray-300">0</p>
-                  <span className="text-[9px] text-red-400 font-bold flex items-center gap-1"><LinkIcon size={8} /> Sincronização pendente</span>
-                </div>
-              ) : (
-                <>
-                  <p className="text-2xl font-serif text-analux-primary mt-1">{user.points}</p>
-                  <div className="w-full bg-gray-100 h-1 rounded-full mt-3 overflow-hidden">
-                    <div className="bg-analux-secondary h-full" style={{ width: '65%' }}></div>
+          {/* Cashback Card */}
+          <div
+            onClick={() => navigate('/shop')}
+            className="snap-start shrink-0 w-[160px] md:w-auto lg:col-span-3 bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl border border-gray-50 shadow-sm flex flex-col justify-between cursor-pointer active:scale-95 transition-all min-h-[130px] md:min-h-[140px]"
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Cashback</span>
+                {!user.isStoreConnected ? (
+                  <div className="flex flex-col mt-1">
+                    <p className="text-2xl font-serif text-gray-300">R$ 0</p>
+                    <span className="text-[8px] text-red-400 font-bold flex items-center gap-1 mt-0.5 animate-pulse">
+                      <LinkIcon size={7} /> Conectar loja
+                    </span>
                   </div>
-                </>
-              )}
-              <p className="text-[9px] text-gray-400 mt-2 font-medium">Troque por produtos, serviços e experiências</p>
-            </div>
-            <div className="p-2 bg-analux-secondary/10 rounded-xl text-analux-secondary">
-              <Crown size={18} />
-            </div>
-          </div>
-        </div>
-
-        {/* MOOD CARD - Back to Top */}
-        <DailyMoodCard />
-
-        {/* Subscription Card - Narrower */}
-        <div className="lg:col-span-2 bg-white p-5 rounded-3xl border border-gray-50 shadow-sm flex flex-col justify-between min-h-[140px]">
-          <div className="flex justify-between items-start mb-2">
-            <div className="flex flex-col gap-1">
-              <div className={`w-10 h-10 flex items-center justify-center rounded-2xl mb-2 ${user.subscription?.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-400'}`}>
-                <Package size={20} />
+                ) : (
+                  <p className="text-2xl font-serif text-analux-primary mt-1">R$ {user.cashback.toFixed(2)}</p>
+                )}
               </div>
-              <h3 className="text-sm font-bold text-analux-primary leading-none">Sua Assinatura</h3>
+              <div className="p-2 bg-analux-secondary/10 rounded-xl text-analux-secondary">
+                <ShoppingBag size={16} />
+              </div>
             </div>
-            {user.subscription?.status === 'ACTIVE' && (
-              <span className="text-[8px] font-bold text-white bg-green-500 px-2.5 py-1 rounded-full uppercase tracking-widest">
-                Ativa
-              </span>
-            )}
-          </div>
-
-          {!user.subscription?.status || user.subscription.status !== 'ACTIVE' ? (
-            <button
-              onClick={() => setShowReactivationModal(true)}
-              className="w-full py-2 bg-analux-primary text-white rounded-lg font-bold uppercase text-[9px] tracking-widest hover:bg-analux-dark transition-all"
-            >
-              {user.subscription?.status === 'PAUSED' ? 'Reativar' : 'Assinar'}
+            <button className="text-[9px] font-bold text-analux-secondary uppercase flex items-center gap-1">
+              Usar na Loja <ArrowUpRight size={9} />
             </button>
-          ) : (
-            <div className="mt-2">
-              <p className="text-[9px] text-gray-400 mb-2">Renova em <br /><b className="text-gray-600">{user.subscription?.nextBoxDate}</b></p>
-              <button onClick={() => navigate('/box')} className="text-[9px] font-bold text-analux-secondary uppercase hover:underline flex items-center gap-1">
-                Gerenciar <ChevronRight size={10} />
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Store Connection Card - Narrower */}
-        <div className={`lg:col-span-2 p-5 rounded-3xl border flex flex-col justify-between transition-all duration-500 min-h-[140px] ${user.isStoreConnected
-          ? 'bg-analux-secondary/10 border-analux-secondary/20'
-          : 'bg-white border-dashed border-gray-200 hover:border-analux-secondary/40'
-          }`}>
-          <div className="flex justify-between items-start mb-2">
-            <div className="flex flex-col gap-1">
-              <div className={`w-10 h-10 flex items-center justify-center rounded-2xl mb-2 ${user.isStoreConnected ? 'bg-white text-analux-secondary shadow-sm' : 'bg-gray-100 text-gray-400'}`}>
-                <ShoppingBag size={20} />
-              </div>
-              <h3 className="text-sm font-bold text-analux-primary leading-none">
-                {user.isStoreConnected ? 'Loja Conectada' : 'Conectar Loja'}
-              </h3>
-            </div>
-            {user.isStoreConnected && (
-              <div className="text-analux-secondary">
-                <Check size={16} />
-              </div>
-            )}
           </div>
 
-          <button
+          {/* Points Card */}
+          <div className="snap-start shrink-0 w-[160px] md:w-auto lg:col-span-3 bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl border border-gray-50 shadow-sm flex flex-col justify-between min-h-[130px] md:min-h-[140px]">
+            <div className="flex justify-between items-start w-full">
+              <div className="w-full mr-3">
+                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Pontos Club</span>
+                {!user.isStoreConnected ? (
+                  <div className="mt-1 mb-1">
+                    <p className="text-2xl font-serif text-gray-300">0</p>
+                    <span className="text-[8px] text-red-400 font-bold flex items-center gap-1">
+                      <LinkIcon size={7} /> Pendente
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-2xl font-serif text-analux-primary mt-1">{user.points}</p>
+                    <div className="w-full bg-gray-100 h-1 rounded-full mt-2 overflow-hidden">
+                      <div className="bg-analux-secondary h-full" style={{ width: '65%' }} />
+                    </div>
+                  </>
+                )}
+                <p className="text-[8px] text-gray-400 mt-1.5 font-medium leading-tight">Troque por produtos e experiências</p>
+              </div>
+              <div className="p-2 bg-analux-secondary/10 rounded-xl text-analux-secondary shrink-0">
+                <Crown size={16} />
+              </div>
+            </div>
+          </div>
+
+          {/* Mood Card — horizontal scroll only on mobile */}
+          <div className="snap-start shrink-0 w-[160px] md:w-auto lg:col-span-2">
+            <DailyMoodCard />
+          </div>
+
+          {/* Store Connection Card */}
+          <div
             onClick={() => navigate('/shop')}
-            className={`w-full py-2.5 rounded-xl font-bold uppercase text-[9px] tracking-widest flex items-center justify-center gap-2 transition-all mt-auto ${user.isStoreConnected
-              ? 'bg-white text-analux-primary hover:bg-analux-primary hover:text-white shadow-sm'
-              : 'bg-analux-secondary text-white hover:scale-105'
-              }`}
+            className={`snap-start shrink-0 w-[160px] md:w-auto lg:col-span-2 p-4 md:p-5 rounded-2xl md:rounded-3xl border flex flex-col justify-between transition-all duration-500 cursor-pointer active:scale-95 min-h-[130px] md:min-h-[140px] ${
+              user.isStoreConnected
+                ? 'bg-analux-secondary/10 border-analux-secondary/20'
+                : 'bg-white border-dashed border-gray-200'
+            }`}
           >
-            {user.isStoreConnected ? 'Ir para Loja' : 'Vincular'}
-          </button>
+            <div className="flex justify-between items-start">
+              <div className={`w-9 h-9 flex items-center justify-center rounded-xl ${user.isStoreConnected ? 'bg-white text-analux-secondary shadow-sm' : 'bg-gray-100 text-gray-400'}`}>
+                <ShoppingBag size={18} />
+              </div>
+              {user.isStoreConnected && <Check size={14} className="text-analux-secondary" />}
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">Loja</p>
+              <p className="text-sm font-bold text-analux-primary leading-tight">
+                {user.isStoreConnected ? 'Conectada ✓' : 'Vincular conta'}
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
 

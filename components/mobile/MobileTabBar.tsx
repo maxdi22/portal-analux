@@ -1,49 +1,59 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, ShoppingBag, Package, User, Sparkles } from 'lucide-react';
-import { useUser } from '../../context/UserContext';
 
 const MobileTabBar: React.FC = () => {
     const location = useLocation();
-    const { user } = useUser();
 
-    // Standard items: Home, Shop, Box, Profile
     const menuItems = [
-        { id: 'dashboard', path: '/dashboard', label: 'Início', icon: <LayoutDashboard size={24} /> },
-        { id: 'shop', path: '/shop', label: 'E-shop', icon: <ShoppingBag size={24} /> },
-        { id: 'box', path: '/box', label: 'Box', icon: <Package size={24} /> },
-        { id: 'style', path: '/style-dna', label: 'DNA', icon: <Sparkles size={24} /> },
-        { id: 'settings', path: '/settings', label: 'Perfil', icon: <User size={24} /> },
+        { id: 'dashboard', path: '/dashboard',  label: 'Início',  icon: LayoutDashboard },
+        { id: 'shop',      path: '/shop',        label: 'E-Shop',  icon: ShoppingBag },
+        { id: 'box',       path: '/box',         label: 'Minha Box', icon: Package },
+        { id: 'style',     path: '/style-dna',   label: 'DNA',     icon: Sparkles },
+        { id: 'settings',  path: '/settings',    label: 'Perfil',  icon: User },
     ];
 
     const isActive = (path: string) => {
         if (path === '/' && location.pathname === '/') return true;
-        if (path !== '/' && location.pathname.startsWith(path)) return true;
-        return false;
+        return path !== '/' && location.pathname.startsWith(path);
     };
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-gray-200/50 pb-[env(safe-area-inset-bottom)] z-50">
-            <div className="flex justify-around items-center h-[52px] pt-1 px-1">
-                {menuItems.map((item) => {
-                    const active = isActive(item.path);
-                    return (
-                        <Link
-                            key={item.id}
-                            to={item.path}
-                            className={`flex flex-col items-center justify-center w-full h-full space-y-[2px] transition-colors duration-200 active:opacity-50 ${active ? 'text-analux-primary' : 'text-gray-400'
-                                }`}
-                        >
-                            <div className="relative">
-                                {item.icon}
-                            </div>
-                            <span className={`text-[10px] font-medium leading-none ${active ? 'font-semibold' : ''}`}>
-                                {item.label}
-                            </span>
-                        </Link>
-                    )
-                })}
+        <nav className="fixed bottom-0 left-0 right-0 z-50 pb-[env(safe-area-inset-bottom)]">
+            {/* Frosted glass bar */}
+            <div className="bg-white/85 backdrop-blur-2xl border-t border-gray-200/60 shadow-[0_-1px_0_rgba(0,0,0,0.06)]">
+                <div className="flex justify-around items-end h-[58px] px-2">
+                    {menuItems.map((item) => {
+                        const active = isActive(item.path);
+                        const Icon = item.icon;
+                        return (
+                            <Link
+                                key={item.id}
+                                to={item.path}
+                                className="flex flex-col items-center justify-end pb-2 gap-[3px] w-full h-full transition-all duration-200 active:scale-90"
+                            >
+                                <div className="relative flex items-center justify-center">
+                                    {/* Active pill background */}
+                                    {active && (
+                                        <span className="absolute inset-0 -m-1.5 rounded-xl bg-analux-primary/10 scale-100 animate-in zoom-in-75 duration-200" />
+                                    )}
+                                    <Icon
+                                        size={22}
+                                        strokeWidth={active ? 2.2 : 1.7}
+                                        className={`relative z-10 transition-colors duration-200 ${
+                                            active ? 'text-analux-primary' : 'text-gray-400'
+                                        }`}
+                                    />
+                                </div>
+                                <span className={`text-[10px] leading-none font-medium tracking-tight transition-colors duration-200 ${
+                                    active ? 'text-analux-primary font-semibold' : 'text-gray-400'
+                                }`}>
+                                    {item.label}
+                                </span>
+                            </Link>
+                        );
+                    })}
+                </div>
             </div>
         </nav>
     );

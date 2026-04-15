@@ -1,40 +1,53 @@
 import React from 'react';
-import { supabase } from '../services/supabase';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, X } from 'lucide-react';
+import { useUser } from '../context/UserContext';
+import ReactivationModal from './ReactivationModal';
 
 const PausedWarningBanner: React.FC = () => {
-    const handleManageSubscription = async () => {
-        try {
-            const { data, error } = await supabase.functions.invoke('stripe-proxy', {
-                body: {
-                    action: 'create_portal_session',
-                    returnUrl: window.location.href
-                }
-            });
+    const { user } = useUser();
+    const [dismissed, setDismissed] = React.useState(false);
+    const [showModal, setShowModal] = React.useState(false);
 
-            if (error) throw error;
-            if (data?.url) {
-                window.location.href = data.url;
-            }
-        } catch (err) {
-            console.error('Erro ao redirecionar para o Stripe:', err);
-            alert('Não foi possível conectar ao portal de pagamento. Verifique se sua assinatura está ativa.');
-        }
-    };
+    if (dismissed) return null;
+
+    const hasStripeCustomer = !!(user as any)?.stripeCustomerId ||
+        !!(user as any)?.subscription?.stripeCustomerId;
 
     return (
-        <div className="bg-amber-500 text-white px-4 py-3 flex flex-col sm:flex-row items-center justify-center gap-3 w-full shadow-md z-50">
-            <div className="flex items-center gap-2 font-medium text-sm text-center">
-                <AlertTriangle size={18} />
-                <span>Sua assinatura está pausada devido a uma falha no pagamento.</span>
+        <>
+            <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2.5 flex items-center justify-between gap-3 w-full shadow-md z-50 relative">
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <AlertTriangle size={16} className="shrink-0" />
+                    <span className="text-sm font-medium truncate">
+                        Assinatura pausada — regularize para continuar recebendo.
+                    </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className="px-3 py-1 bg-white text-amber-600 rounded-full font-bold text-[10px] uppercase tracking-wider hover:bg-amber-50 transition-colors shadow-sm whitespace-nowrap"
+                    >
+                        Reativar
+                    </button>
+                    <button
+                        onClick={() => setDismissed(true)}
+                        className="p-1 hover:bg-white/20 rounded-full transition-colors"
+                        aria-label="Fechar"
+                    >
+                        <X size={14} />
+                    </button>
+                </div>
             </div>
-            <button
-                onClick={handleManageSubscription}
-                className="px-4 py-1.5 bg-white text-amber-600 rounded-full font-bold text-xs uppercase tracking-wider hover:bg-amber-50 transition-colors shadow-sm"
-            >
-                Atualizar Pagamento
-            </button>
-        </div>
+
+            {showModal && (
+                <ReactivationModal
+                    currentPlan={user?.subscription?.plan ?? null}
+                    currentCycle={user?.subscription?.frequency ?? null}
+                    hasStripeCustomer={hasStripeCustomer}
+                    onClose={() => setShowModal(false)}
+                />
+            )}
+        </>
     );
 };
 
