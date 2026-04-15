@@ -12,14 +12,14 @@ const MobileHeader: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-b border-gray-100/80 pt-[env(safe-area-inset-top)] z-50 shadow-sm">
-            <div className="h-[52px] flex items-center justify-between px-5">
+        <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-gray-100/80 pt-[env(safe-area-inset-top)] z-50 shadow-sm">
+            <div className="h-[64px] flex items-center justify-between px-5">
                 {/* Left Placeholder */}
-                <div className="w-9" />
+                <div className="w-10" />
 
                 {/* Center Logo */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pt-[env(safe-area-inset-top)] flex items-center">
-                    <img src="/sidebar-logo.png" alt="Analux" className="h-6 w-auto object-contain" />
+                    <img src="/sidebar-logo.png" alt="Analux" className="h-12 w-auto object-contain" />
                 </div>
 
                 {/* Notification Bell */}
@@ -43,13 +43,13 @@ const MobileLayout: React.FC = () => {
     return (
         <div
             className="min-h-screen bg-[#F5F5F7] pb-24 font-sans antialiased text-gray-900 select-none flex flex-col"
-            style={{ paddingTop: `calc(52px + ${bannerHeight}px)` }}
+            style={{ paddingTop: `calc(64px + ${bannerHeight}px)` }}
         >
             <MobileHeader />
 
             {/* Paused Banner — rendered ONCE here, not in LayoutWrapper */}
             {isPaused && (
-                <div className="fixed top-[52px] left-0 right-0 z-40">
+                <div className="fixed top-[64px] left-0 right-0 z-40">
                     <PausedWarningBanner />
                 </div>
             )}
