@@ -24,16 +24,21 @@ import OnboardingModal from './OnboardingModal';
 import ShareModal from './ShareModal';
 import DeliveryTimeline from './DeliveryTimeline';
 import DailyMoodCard from './DailyMoodCard';
+import ReactivationModal from './ReactivationModal';
 
 const DashboardHome: React.FC = () => {
   const { user, refreshData } = useUser();
   const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = React.useState(false);
   const [showShareModal, setShowShareModal] = React.useState(false);
+  const [showReactivationModal, setShowReactivationModal] = React.useState(false);
   // Persist referral activation
   const [isReferralActive, setIsReferralActive] = React.useState(() => {
     return localStorage.getItem('analux_referral_active') === 'true';
   });
+
+  const hasStripeCustomer = !!(user as any).stripeCustomerId ||
+    !!(user as any).subscription?.stripeCustomerId;
 
   React.useEffect(() => {
     // Only show if we have a loaded user (with ID) and they explicitly haven't completed onboarding
@@ -192,31 +197,10 @@ const DashboardHome: React.FC = () => {
 
           {!user.subscription?.status || user.subscription.status !== 'ACTIVE' ? (
             <button
-              onClick={async () => {
-                const sessionResponse = await supabase.auth.getSession();
-                const session = sessionResponse.data.session;
-                if (!session) return;
-                
-                const priceId = import.meta.env.VITE_STRIPE_PRICE_ID; 
-                if (!priceId) {
-                  alert("Configuração de preço ausente.");
-                  return;
-                }
-
-                try {
-                  const { data, error } = await supabase.functions.invoke('stripe-proxy', {
-                    body: { action: 'create_checkout_session', priceId, returnUrl: window.location.origin + '/dashboard' }
-                  });
-                  if (error) throw error;
-                  if (data?.url) window.location.href = data.url;
-                } catch (err: any) { 
-                  console.error(err);
-                  alert("Erro ao iniciar checkout."); 
-                }
-              }}
+              onClick={() => setShowReactivationModal(true)}
               className="w-full py-2 bg-analux-primary text-white rounded-lg font-bold uppercase text-[9px] tracking-widest hover:bg-analux-dark transition-all"
             >
-              Assinar
+              {user.subscription?.status === 'PAUSED' ? 'Reativar' : 'Assinar'}
             </button>
           ) : (
             <div className="mt-2">
@@ -571,18 +555,21 @@ const DashboardHome: React.FC = () => {
           </div>
         </section>
       ) : (
-        <section className="bg-gray-50 rounded-[40px] p-8 border border-gray-100 flex items-center justify-between opacity-75 grayscale">
+        <section className="bg-amber-50 rounded-[40px] p-8 border border-amber-100 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-400">
+            <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-500">
               <Package size={24} />
             </div>
             <div>
-              <h3 className="text-lg font-serif text-gray-500">Status da Box Indisponível</h3>
-              <p className="text-xs text-gray-400">Sua assinatura não está ativa no momento.</p>
+              <h3 className="text-lg font-serif text-amber-700">Assinatura Pausada</h3>
+              <p className="text-xs text-amber-600">Regularize para voltar a receber suas boxes exclusivas.</p>
             </div>
           </div>
-          <button onClick={() => navigate('/box')} className="text-xs font-bold uppercase tracking-widest text-analux-primary hover:underline">
-            Reativar Assinatura
+          <button
+            onClick={() => setShowReactivationModal(true)}
+            className="px-6 py-3 bg-amber-500 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-amber-600 transition-all shadow-md"
+          >
+            Reativar Agora
           </button>
         </section>
       )}
@@ -591,6 +578,16 @@ const DashboardHome: React.FC = () => {
         <ShareModal
           referralCode={user.referralCode || 'VIP123'}
           onClose={() => setShowShareModal(false)}
+        />
+      )}
+
+      {/* Reactivation Modal */}
+      {showReactivationModal && (
+        <ReactivationModal
+          currentPlan={user.subscription?.plan ?? null}
+          currentCycle={user.subscription?.frequency ?? null}
+          hasStripeCustomer={hasStripeCustomer}
+          onClose={() => setShowReactivationModal(false)}
         />
       )}
     </div>
