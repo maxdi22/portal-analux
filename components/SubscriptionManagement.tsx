@@ -4,6 +4,7 @@ import { SubscriptionStatus, SubscriptionFrequency } from '../types';
 import { useUser } from '../context/UserContext';
 import { supabase } from '../services/supabase';
 import OnboardingModal from './OnboardingModal';
+import ReactivationModal from './ReactivationModal';
 
 const SubscriptionManagement: React.FC = () => {
   const { user, updateUser, refreshData } = useUser();
@@ -86,6 +87,21 @@ const SubscriptionManagement: React.FC = () => {
 
   /* Style Editing State */
   const [showEditStyleModal, setShowEditStyleModal] = React.useState(false);
+
+  /* Reactivation Modal */
+  const [showReactivationModal, setShowReactivationModal] = React.useState(false);
+
+  // Detect if user needs reactivation: PAUSED or no stripe customer at all
+  const hasStripeCustomer = !!(user as any).subscription?.stripeCustomerId ||
+    !!(user as any).stripeCustomerId;
+  const needsReactivation =
+    user.subscription?.status === SubscriptionStatus.PAUSED ||
+    user.subscription?.status === SubscriptionStatus.CANCELLED ||
+    (!user.subscription?.status && user.subscription?.plan); // manual lead with plan but no status
+
+  const handleOpenReactivation = () => {
+    setShowReactivationModal(true);
+  };
 
   /* Address Editing State */
   const [isEditingAddress, setIsEditingAddress] = React.useState(false);
@@ -175,14 +191,43 @@ const SubscriptionManagement: React.FC = () => {
 
             <div className="flex flex-wrap gap-4 pt-6 border-t border-gray-50">
               {user.subscription?.status === SubscriptionStatus.PAUSED ? (
-                <button
-                  onClick={handleManageSubscription}
-                  className="w-full py-4 bg-amber-500 text-white rounded-xl text-sm font-bold hover:bg-amber-600 transition-all flex items-center justify-center gap-2 shadow-lg animate-pulse"
-                >
-                  <CreditCard size={18} />
-                  Regularizar Pagamento e Reativar Assinatura
-                </button>
+                // PAUSED: show reactivation banner + button
+                <>
+                  <div className="w-full bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
+                    <AlertCircle size={18} className="text-amber-500 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-bold text-amber-700">Assinatura pausada por falta de pagamento</p>
+                      <p className="text-xs text-amber-600 mt-0.5">Reative escolhendo seu plano e realizando um novo pagamento.</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleOpenReactivation}
+                    className="w-full py-4 bg-amber-500 text-white rounded-xl text-sm font-bold hover:bg-amber-600 transition-all flex items-center justify-center gap-2 shadow-lg"
+                  >
+                    <RefreshCw size={18} />
+                    Reativar Assinatura Agora
+                  </button>
+                </>
+              ) : !user.subscription?.status || !user.subscription?.plan ? (
+                // LEAD MANUAL or no subscription — prompt to activate
+                <>
+                  <div className="w-full bg-analux-secondary/10 border border-analux-secondary/30 rounded-2xl p-4 flex items-start gap-3">
+                    <Sparkles size={18} className="text-analux-secondary shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-bold text-analux-primary">Você ainda não tem uma assinatura ativa</p>
+                      <p className="text-xs text-gray-500 mt-0.5">Escolha seu plano e comece a receber suas boxes exclusivas.</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleOpenReactivation}
+                    className="w-full py-4 bg-analux-primary text-white rounded-xl text-sm font-bold hover:bg-analux-dark transition-all flex items-center justify-center gap-2 shadow-lg"
+                  >
+                    <CreditCard size={18} />
+                    Ativar Assinatura
+                  </button>
+                </>
               ) : (
+                // ACTIVE: normal controls
                 <>
                   <button
                     onClick={handleManageSubscription}
@@ -432,6 +477,15 @@ const SubscriptionManagement: React.FC = () => {
             refreshData();
             alert('Perfil de estilo atualizado com sucesso!');
           }}
+        />
+      )}
+
+      {showReactivationModal && (
+        <ReactivationModal
+          currentPlan={user.subscription?.plan ?? null}
+          currentCycle={user.subscription?.frequency ?? null}
+          hasStripeCustomer={hasStripeCustomer}
+          onClose={() => setShowReactivationModal(false)}
         />
       )}
     </div>
