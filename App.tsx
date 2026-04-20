@@ -22,7 +22,6 @@ import BoxesDashboard from './components/admin/boxes/BoxesDashboard';
 import CreateBox from './components/admin/boxes/CreateBox';
 import MarketingCampaigns from './components/admin/MarketingCampaigns';
 
-// Novas Importações Admin
 import AdminStock from './components/admin/AdminStock';
 import AdminFinance from './components/admin/AdminFinance';
 import AdminPlans from './components/admin/AdminPlans';
@@ -31,8 +30,11 @@ import AdminReports from './components/admin/AdminReports';
 import AdminSettings from './components/admin/AdminSettings';
 import AdminCommunity from './components/admin/AdminCommunity';
 import AdminLeads from './components/admin/AdminLeads';
+import AdminMarketingAds from './components/admin/AdminMarketingAds';
+import AdsLiveDashboard from './components/admin/AdsLiveDashboard';
 
 import { UserProvider, useUser } from './context/UserContext';
+import { MarketingProvider } from './context/MarketingContext';
 import { ToastProvider } from './context/ToastContext';
 import { SubscriptionStatus } from './types';
 
@@ -120,7 +122,10 @@ const AppContent: React.FC = () => {
         <Route path="boxes/new" element={<CreateBox />} />
 
         {/* Marketing Module */}
-        <Route path="marketing" element={<MarketingCampaigns />} />
+        <Route path="marketing" element={<Navigate to="/admin/marketing/live" replace />} />
+        <Route path="marketing/live" element={<AdsLiveDashboard />} />
+        <Route path="marketing/config" element={<AdminMarketingAds />} />
+        <Route path="marketing/campaigns" element={<MarketingCampaigns />} />
 
         {/* Novos Módulos Admin */}
         <Route path="stock" element={<AdminStock />} />
@@ -143,7 +148,9 @@ const App: React.FC = () => {
     <UserProvider>
       <ToastProvider>
         <BrowserRouter>
-          <AppContent />
+          <MarketingProvider>
+            <AppContent />
+          </MarketingProvider>
         </BrowserRouter>
       </ToastProvider>
     </UserProvider>
