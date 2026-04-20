@@ -515,6 +515,7 @@ const LandingPageC: React.FC = () => {
             loop 
             muted 
             playsInline 
+            preload="auto"
             poster="/cover2.jpg"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -524,6 +525,8 @@ const LandingPageC: React.FC = () => {
             autoPlay 
             muted 
             playsInline 
+            preload="auto"
+            fetchpriority="high"
             onEnded={() => setIntroMobileFinished(true)}
             poster="/cover1.jpg"
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out z-10 ${introMobileFinished ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
