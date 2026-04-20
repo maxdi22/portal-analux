@@ -83,10 +83,10 @@ const AppContent: React.FC = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<LandingPageC />} />
       <Route path="/lp-b" element={<LandingPageB />} />
-      <Route path="/lp-c" element={<LandingPageC />} />
-      <Route path="/convite/:code" element={<LandingPage />} />
+      <Route path="/lp-old" element={<LandingPage />} />
+      <Route path="/convite/:code" element={<LandingPageC />} />
 
       <Route element={<ProtectedLayout />}>
         {/* Allowed routes for everyone, including paused users */}

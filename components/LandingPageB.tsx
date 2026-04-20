@@ -11,16 +11,82 @@ import {
     ShoppingBag,
     Plus
 } from 'lucide-react';
+import { useUser } from '../context/UserContext';
+import { supabase } from '../services/supabase';
 import AuthModal from './AuthModal';
+import SubscriptionReviewModal from './SubscriptionReviewModal';
 
 const LandingPageB: React.FC = () => {
     const navigate = useNavigate();
+    const { user } = useUser();
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [authMode, setAuthMode] = useState<'LOGIN' | 'REGISTER'>('REGISTER');
 
+    const [reviewModalData, setReviewModalData] = useState<{
+        planName: string;
+        cycle: 'monthly' | 'semiannual';
+        price: string;
+        perks: string[];
+    } | null>(null);
+    const [pendingSubscription, setPendingSubscription] = useState<{ planName: string, cycle: 'monthly' | 'semiannual', price: string, perks: string[] } | null>(null);
+
+    React.useEffect(() => {
+        const savedPlan = localStorage.getItem('sub_draft_active_plan');
+        if (savedPlan) {
+            try {
+                const parsed = JSON.parse(savedPlan);
+                setReviewModalData(parsed);
+            } catch (e) {
+                localStorage.removeItem('sub_draft_active_plan');
+            }
+        }
+    }, []);
+
+    const executeCheckout = async (planName: string, cycle: 'monthly' | 'semiannual') => {
+        const priceMap: Record<string, string> = {
+            'Essencial-monthly':    'price_1TNjcPDWlGIoBgz1T0SlVW6H',
+            'Essencial-semiannual': 'price_1TNjcPDWlGIoBgz1kexIZLN2',
+            'Signature-monthly':    'price_1TNjcQDWlGIoBgz1jtpNxY9l',
+            'Signature-semiannual': 'price_1TNjcQDWlGIoBgz1RidzBHQW',
+        };
+        const key = `${planName}-${cycle}`;
+        const priceId = priceMap[key];
+        if (!priceId) {
+            alert('Este plano ainda não está configurado. Por favor, tente novamente.');
+            return;
+        }
+        try {
+            const { data, error } = await supabase.functions.invoke('stripe-proxy', {
+                body: {
+                    action: 'create_checkout_session',
+                    priceId: priceId,
+                    returnUrl: window.location.origin + '/dashboard'
+                }
+            });
+            if (error) throw error;
+            if (data?.url) {
+                window.location.href = data.url;
+            }
+        } catch (err) {
+            console.error('Erro no checkout:', err);
+            alert('Erro ao iniciar checkout. Tente novamente.');
+        }
+    };
+
+    const handleSubscribePlan = (planName: string, cycle: 'monthly' | 'semiannual', price: string, perks: string[]) => {
+        if (!user?.id) {
+            setPendingSubscription({ planName, cycle, price, perks });
+            setAuthMode('REGISTER');
+            setShowAuthModal(true);
+            return;
+        }
+        const data = { planName, cycle, price, perks };
+        setReviewModalData(data);
+        localStorage.setItem('sub_draft_active_plan', JSON.stringify(data));
+    };
+
     const handleSubscribe = () => {
-        setAuthMode('REGISTER');
-        setShowAuthModal(true);
+        document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' });
     };
 
     const handleLogin = () => {
@@ -269,7 +335,7 @@ const LandingPageB: React.FC = () => {
 
                     {/* Minimalist Toggle */}
                     <div className="inline-flex items-center gap-8 border-b border-gray-200 pb-4">
-                        {['Mensal', 'Trimestral', 'Semestral'].map((cycle) => (
+                        {['Flex', 'Semestral'].map((cycle) => (
                             <button
                                 key={cycle}
                                 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-analux-primary focus:text-analux-primary focus:outline-none transition-colors relative group"
@@ -288,16 +354,16 @@ const LandingPageB: React.FC = () => {
                         <h3 className="text-4xl font-serif text-analux-primary mb-2">Essencial</h3>
                         <p className="text-xs uppercase tracking-widest text-gray-400 mb-8">Para começar a brilhar</p>
                         <div className="mb-8">
-                            <span className="text-5xl font-serif text-analux-primary">R$ 129,90</span>
+                            <span className="text-5xl font-serif text-analux-primary">R$ 189</span>
                             <span className="text-sm text-gray-400 ml-2">/mês</span>
                         </div>
                         <ul className="space-y-4 mb-12 border-t border-gray-100 pt-8">
-                            <li className="flex items-center gap-3 text-sm text-gray-600"><Check size={14} className="text-analux-secondary" /> 2 a 3 Joias Banhadas</li>
-                            <li className="flex items-center gap-3 text-sm text-gray-600"><Check size={14} className="text-analux-secondary" /> Curadoria Mensal</li>
-                            <li className="flex items-center gap-3 text-sm text-gray-600"><Check size={14} className="text-analux-secondary" /> Cashback de 2%</li>
+                            <li className="flex items-center gap-3 text-sm text-gray-600"><Check size={14} className="text-analux-secondary" /> Acesso ao Portal Analux</li>
+                            <li className="flex items-center gap-3 text-sm text-gray-600"><Check size={14} className="text-analux-secondary" /> Cobrança Mensal</li>
+                            <li className="flex items-center gap-3 text-sm text-gray-600"><Check size={14} className="text-analux-secondary" /> Frete Fixo Nacional</li>
                         </ul>
                         <button
-                            onClick={handleSubscribe}
+                            onClick={() => handleSubscribePlan('Essencial', 'monthly', '189', ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional'])}
                             className="w-full py-4 border border-analux-primary text-analux-primary text-[10px] font-bold uppercase tracking-widest hover:bg-analux-primary hover:text-white transition-colors"
                         >
                             Selecionar
@@ -306,24 +372,24 @@ const LandingPageB: React.FC = () => {
 
                     {/* Plan 2 - Featured */}
                     <div className="bg-analux-primary text-white p-12 -mt-8 shadow-2xl relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 bg-analux-secondary text-white text-[9px] font-bold uppercase tracking-widest px-4 py-2">Best Seller</div>
-                        <h3 className="text-4xl font-serif mb-2">Premium</h3>
+                        <div className="absolute top-0 right-0 bg-analux-secondary text-white text-[9px] font-bold uppercase tracking-widest px-4 py-2">Premium</div>
+                        <h3 className="text-4xl font-serif mb-2">Signature</h3>
                         <p className="text-xs uppercase tracking-widest text-white/50 mb-8">A experiência completa</p>
                         <div className="mb-8">
-                            <span className="text-5xl font-serif">R$ 179,90</span>
+                            <span className="text-5xl font-serif">R$ 239</span>
                             <span className="text-sm text-white/50 ml-2">/mês</span>
                         </div>
                         <ul className="space-y-4 mb-12 border-t border-white/10 pt-8">
-                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> 4 a 5 Joias Banhadas</li>
-                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> Mimo Extra Exclusivo</li>
-                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> Cashback de 5%</li>
-                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> Frete Grátis</li>
+                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> Acesso ao Portal Analux</li>
+                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> Cobrança Mensal</li>
+                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> Frete Fixo Nacional</li>
+                            <li className="flex items-center gap-3 text-sm text-white/90"><Check size={14} className="text-analux-secondary" /> Curadoria Superior</li>
                         </ul>
                         <button
-                            onClick={handleSubscribe}
+                            onClick={() => handleSubscribePlan('Signature', 'monthly', '239', ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Curadoria Superior'])}
                             className="w-full py-4 bg-white text-analux-primary text-[10px] font-bold uppercase tracking-widest hover:bg-analux-secondary hover:text-white transition-colors"
                         >
-                            Assinar Premium
+                            Assinar Signature
                         </button>
                     </div>
                 </div>
@@ -470,11 +536,38 @@ const LandingPageB: React.FC = () => {
                 </div>
             </footer>
 
+            {/* Review Modal */}
+            {reviewModalData && (
+                <SubscriptionReviewModal
+                    planName={reviewModalData.planName}
+                    cycle={reviewModalData.cycle}
+                    price={reviewModalData.price}
+                    perks={reviewModalData.perks}
+                    onClose={() => {
+                        setReviewModalData(null);
+                        localStorage.removeItem('sub_draft_active_plan');
+                    }}
+                    onConfirm={() => {
+                        localStorage.removeItem('sub_draft_active_plan');
+                        return executeCheckout(reviewModalData.planName, reviewModalData.cycle);
+                    }}
+                />
+            )}
+
             {showAuthModal && (
                 <AuthModal
                     onClose={() => setShowAuthModal(false)}
                     initialMode={authMode}
-                    onAuthSuccess={() => navigate('/dashboard')}
+                    customWelcomeMessage={authMode === 'REGISTER' ? 'Crie seu login e senha para prosseguir para a contratação.' : undefined}
+                    onAuthSuccess={() => {
+                        if (pendingSubscription) {
+                            setReviewModalData(pendingSubscription);
+                            setPendingSubscription(null);
+                            setShowAuthModal(false);
+                        } else {
+                            navigate('/dashboard');
+                        }
+                    }}
                 />
             )}
         </div>

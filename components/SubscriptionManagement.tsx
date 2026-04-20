@@ -149,7 +149,13 @@ const SubscriptionManagement: React.FC = () => {
               <div className="bg-analux-contrast/50 p-4 rounded-2xl min-w-[150px]">
                 <p className="text-[10px] text-gray-400 uppercase font-bold">Próxima Cobrança</p>
                 <p className="text-xl font-bold text-analux-primary">
-                  {['Essencial', 'ESSENTIAL'].includes(user.subscription?.plan || '') ? 'R$ 129,90' : 'R$ --'}
+                  {(() => {
+                    const t = (user.subscription?.tier_code || user.subscription?.plan || '').toLowerCase();
+                    const isSemi = user.subscription?.frequency === 'semiannual';
+                    if (t === 'essencial') return isSemi ? 'R$ 169/mês' : 'R$ 189/mês';
+                    if (t === 'signature' || t === 'premium') return isSemi ? 'R$ 219/mês' : 'R$ 239/mês';
+                    return 'R$ --';
+                  })()}
                 </p>
                 <p className="text-xs text-analux-secondary font-medium">em {user.subscription?.nextBoxDate || '-'}</p>
               </div>
@@ -297,11 +303,12 @@ const SubscriptionManagement: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  name: 'Premium',
-                  desc: 'Receba de 4 a 5 semijoias por mês!',
-                  monthly: { price: '179,90', perks: ['4 a 5 Joias Exclusivas', 'Box Temática Mensal', 'Mimo Extra', 'Cashback 5%'] }
+                  id: 'signature',
+                  name: 'Signature',
+                  desc: 'A experiência superior da nossa curadoria.',
+                  monthly: { price: '239', perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Curadoria Superior'] }
                 }
-              ].filter(p => user.subscription?.plan !== p.name).map((plan) => (
+              ].filter(p => !['signature', 'premium'].includes((user.subscription?.tier_code || user.subscription?.plan || '').toLowerCase())).map((plan) => (
                 <div key={plan.name} className="bg-white rounded-[32px] p-6 border border-gray-100 shadow-sm hover:shadow-lg transition-all group relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-24 h-24 bg-analux-secondary/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-700"></div>
 

@@ -11,33 +11,30 @@ interface ReactivationModalProps {
   onClose: () => void;
 }
 
-type Cycle = 'monthly' | 'quarterly' | 'semiannual';
+type Cycle = 'monthly' | 'semiannual';
 
 const PLANS = [
   {
     name: 'Essencial',
-    desc: '2 a 3 semijoias por mês',
+    desc: 'Experiência Analux premium de entrada',
     featured: false,
-    monthly:    { price: '129,90', priceId: 'price_1TMDhoDWlGIoBgz1ifmKQn7r', label: 'Mensal' },
-    quarterly:  { price: '119,90', priceId: 'price_1TMDhpDWlGIoBgz1YbX8bm0R', label: 'Trimestral (3x)' },
-    semiannual: { price: '109,90', priceId: 'price_1TMDhqDWlGIoBgz1dRmSM2we', label: 'Semestral (6x)' },
+    monthly:    { price: '189', priceId: 'price_1TNjcPDWlGIoBgz1T0SlVW6H', label: 'Flex' },
+    semiannual: { price: '169', priceId: 'price_1TNjcPDWlGIoBgz1kexIZLN2', label: 'Semestral (6 meses)' },
   },
   {
-    name: 'Premium',
-    desc: '4 a 5 semijoias + mimo extra',
+    name: 'Signature',
+    desc: 'A experiência superior da nossa curadoria',
     featured: true,
-    monthly:    { price: '179,90', priceId: 'price_1TMDhsDWlGIoBgz1hGMZbMUm', label: 'Mensal' },
-    quarterly:  { price: '169,90', priceId: 'price_1TMDhtDWlGIoBgz1lEr881uW', label: 'Trimestral (3x)' },
-    semiannual: { price: '159,90', priceId: 'price_1TMDhtDWlGIoBgz1HobvAV3q', label: 'Semestral (6x)' },
+    monthly:    { price: '239', priceId: 'price_1TNjcQDWlGIoBgz1jtpNxY9l', label: 'Flex' },
+    semiannual: { price: '219', priceId: 'price_1TNjcQDWlGIoBgz1RidzBHQW', label: 'Semestral (6 meses)' },
   },
 ];
 
 const CYCLE_MAP: Record<string, Cycle> = {
+  'Flex': 'monthly',
   'Mensal': 'monthly',
-  'Trimestral': 'quarterly',
   'Semestral': 'semiannual',
   'monthly': 'monthly',
-  'quarterly': 'quarterly',
   'semiannual': 'semiannual',
 };
 
@@ -58,7 +55,7 @@ const ReactivationModal: React.FC<ReactivationModalProps> = ({
   const defaultCycle: Cycle = (currentCycle ? CYCLE_MAP[currentCycle] : null) ?? 'monthly';
 
   const [selectedPlan, setSelectedPlan] = React.useState(defaultPlan.name);
-  const [selectedCycle, setSelectedCycle] = React.useState<Cycle>(defaultCycle);
+  const [selectedCycle, setSelectedCycle] = React.useState<Cycle>(defaultCycle === 'monthly' || defaultCycle === 'semiannual' ? defaultCycle : 'monthly');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -161,7 +158,7 @@ const ReactivationModal: React.FC<ReactivationModalProps> = ({
               Ciclo de Cobrança
             </label>
             <div className="space-y-2">
-              {(['monthly', 'quarterly', 'semiannual'] as Cycle[]).map(cycle => {
+              {(['monthly', 'semiannual'] as Cycle[]).map(cycle => {
                 const data = plan[cycle];
                 const isSelected = selectedCycle === cycle;
                 const isBest = cycle === 'semiannual';

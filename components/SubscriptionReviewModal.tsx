@@ -6,7 +6,7 @@ interface SubscriptionReviewModalProps {
     onClose: () => void;
     onConfirm: () => Promise<void> | void;
     planName: string;
-    cycle: 'monthly' | 'annual';
+    cycle: 'monthly' | 'quarterly' | 'semiannual';
     price: string;
     perks: string[];
 }
@@ -147,7 +147,7 @@ const SubscriptionReviewModal: React.FC<SubscriptionReviewModalProps> = ({
                                 </div>
                                 <div className="text-right">
                                     <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Frequência</p>
-                                    <p className="text-sm font-medium text-analux-primary mt-1 capitalize">{cycle === 'monthly' ? 'Mensal' : 'Anual'}</p>
+                                    <p className="text-sm font-medium text-analux-primary mt-1 capitalize">{cycle === 'monthly' ? 'Mensal' : cycle === 'quarterly' ? 'Trimestral' : 'Semestral'}</p>
                                 </div>
                             </div>
                             <div className="border-t border-gray-200 my-4 border-dashed"></div>

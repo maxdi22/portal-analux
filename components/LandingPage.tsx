@@ -27,18 +27,18 @@ import { useParams } from 'react-router-dom';
 const LandingPage: React.FC = () => {
   const { setIsMember, isMember } = useUser();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'quarterly' | 'semiannual'>('monthly');
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'semiannual'>('monthly');
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean | 'signup'>(false);
 
   // State for Review Modal (Plan details)
   const [reviewModalData, setReviewModalData] = useState<{
     planName: string;
-    cycle: 'monthly' | 'quarterly' | 'semiannual';
+    cycle: 'monthly' | 'semiannual';
     price: string;
     perks: string[];
   } | null>(null);
 
-  const [pendingSubscription, setPendingSubscription] = useState<{ plan: string, cycle: 'monthly' | 'quarterly' | 'semiannual' } | null>(null);
+  const [pendingSubscription, setPendingSubscription] = useState<{ plan: string, cycle: 'monthly' | 'semiannual' } | null>(null);
 
   // Restore state on mount - Enabled for better UX
   React.useEffect(() => {
@@ -99,17 +99,13 @@ const LandingPage: React.FC = () => {
     document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const executeCheckout = async (planName: string, cycle: 'monthly' | 'quarterly' | 'semiannual') => {
+  const executeCheckout = async (planName: string, cycle: 'monthly' | 'semiannual') => {
     // Map plans to Stripe Price IDs (PRODUCTION - created via Stripe MCP)
     const priceMap: Record<string, string> = {
-      // Essencial: prod_UKtULNmqQVeJTL
-      'Essencial-monthly':    'price_1TMDhoDWlGIoBgz1ifmKQn7r', // R$ 129,90/mês
-      'Essencial-quarterly':  'price_1TMDhpDWlGIoBgz1YbX8bm0R', // R$ 359,70 (3x R$119,90)
-      'Essencial-semiannual': 'price_1TMDhqDWlGIoBgz1dRmSM2we', // R$ 659,40 (6x R$109,90)
-      // Premium: prod_UKtUB2sDaM5Tx1
-      'Premium-monthly':    'price_1TMDhsDWlGIoBgz1hGMZbMUm', // R$ 179,90/mês
-      'Premium-quarterly':  'price_1TMDhtDWlGIoBgz1lEr881uW', // R$ 509,70 (3x R$169,90)
-      'Premium-semiannual': 'price_1TMDhtDWlGIoBgz1HobvAV3q', // R$ 959,40 (6x R$159,90)
+      'Essencial-monthly':    'price_1TNjcPDWlGIoBgz1T0SlVW6H', // R$ 189/mês
+      'Essencial-semiannual': 'price_1TNjcPDWlGIoBgz1kexIZLN2', // R$ 169/mês
+      'Signature-monthly':    'price_1TNjcQDWlGIoBgz1jtpNxY9l', // R$ 239/mês
+      'Signature-semiannual': 'price_1TNjcQDWlGIoBgz1RidzBHQW', // R$ 219/mês
     };
 
     const key = `${planName}-${cycle}`;
@@ -139,7 +135,7 @@ const LandingPage: React.FC = () => {
     }
   };
 
-  const handleSubscribe = async (plan: any, cycle: 'monthly' | 'quarterly' | 'semiannual') => {
+  const handleSubscribe = async (plan: any, cycle: 'monthly' | 'semiannual') => {
     // Helper to extract correct price/perks
     const details = plan[cycle];
 
@@ -188,36 +184,28 @@ const LandingPage: React.FC = () => {
   const plans = [
     {
       name: 'Essencial',
-      desc: 'Receba de 2 a 3 semijoias por mês!',
+      desc: 'Plano de entrada premium. Vivencie a experiência Analux com uma curadoria essencial.',
       featured: false,
       monthly: {
-        price: '129,90',
-        perks: ['2 a 3 Joias Exclusivas', 'Box Temática Mensal', 'Renovação Automática', 'Cashback 2%']
-      },
-      quarterly: {
-        price: '119,90',
-        perks: ['2 a 3 Joias Exclusivas', 'Box Temática Mensal', 'Renovação Trimestral', 'Cashback 3%']
+        price: '189',
+        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Cancele quando quiser']
       },
       semiannual: {
-        price: '109,90',
-        perks: ['2 a 3 Joias Exclusivas', 'Box Temática Mensal', 'Renovação Semestral', 'Cashback 5%']
+        price: '169',
+        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Permanência (6 meses)', 'Pouch Dust Bag Premium de Adesão']
       }
     },
     {
-      name: 'Premium',
-      desc: 'Receba de 4 a 5 semijoias por mês!',
+      name: 'Signature',
+      desc: 'Plano aspiracional. Curadoria superior, experiência rica e o maior valor percebido.',
       featured: true,
       monthly: {
-        price: '179,90',
-        perks: ['4 a 5 Joias Exclusivas', 'Box Temática Mensal', 'Mimo Extra', 'Cashback 5%']
-      },
-      quarterly: {
-        price: '169,90',
-        perks: ['4 a 5 Joias Exclusivas', 'Box Temática Mensal', 'Mimo Extra', 'Cashback 8%']
+        price: '239',
+        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Cancele quando quiser']
       },
       semiannual: {
-        price: '159,90',
-        perks: ['4 a 5 Joias Exclusivas', 'Box Temática Mensal', 'Mimo Extra', 'Cashback 10%']
+        price: '219',
+        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Permanência (6 meses)', 'Porta-Joias Exclusivo de Adesão']
       }
     }
   ];
@@ -418,36 +406,29 @@ const LandingPage: React.FC = () => {
         <div className="text-center space-y-8 mb-24">
           <h2 className="text-6xl font-serif text-analux-primary">Escolha seu Plano</h2>
 
-          {/* Chic Toggle - 3 Options */}
+          {/* Chic Toggle - 2 Options */}
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-4 bg-white p-1.5 rounded-full border border-gray-100 shadow-sm relative w-fit">
               <div
-                className={`absolute top-1.5 bottom-1.5 rounded-full bg-analux-primary transition-all duration-500 ease-in-out w-32 ${billingCycle === 'monthly' ? 'left-1.5' :
-                  billingCycle === 'quarterly' ? 'left-[134px]' : 'left-[266px]'
+                className={`absolute top-1.5 bottom-1.5 rounded-full bg-analux-primary transition-all duration-500 ease-in-out w-40 ${billingCycle === 'monthly' ? 'left-1.5' : 'left-[168px]'
                   }`}
               ></div>
               <button
                 onClick={() => setBillingCycle('monthly')}
-                className={`relative z-10 px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 w-32 ${billingCycle === 'monthly' ? 'text-white' : 'text-gray-400'}`}
+                className={`relative z-10 px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 w-40 ${billingCycle === 'monthly' ? 'text-white' : 'text-gray-400'}`}
               >
-                Mensal
-              </button>
-              <button
-                onClick={() => setBillingCycle('quarterly')}
-                className={`relative z-10 px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 w-32 ${billingCycle === 'quarterly' ? 'text-white' : 'text-gray-400'}`}
-              >
-                Trimestral
+                Flex
               </button>
               <button
                 onClick={() => setBillingCycle('semiannual')}
-                className={`relative z-10 px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 w-32 ${billingCycle === 'semiannual' ? 'text-white' : 'text-gray-400'}`}
+                className={`relative z-10 px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 w-40 ${billingCycle === 'semiannual' ? 'text-white' : 'text-gray-400'}`}
               >
                 Semestral
               </button>
             </div>
             {billingCycle !== 'monthly' && (
               <div className="flex items-center gap-2 text-analux-secondary font-bold text-[10px] uppercase tracking-widest animate-fadeIn">
-                <Gem size={12} /> {billingCycle === 'semiannual' ? 'Melhor Custo-Benefício' : 'Economia Garantida'}
+                <Gem size={12} /> Acesso a Benefício Exclusivo de Adesão
               </div>
             )}
           </div>
@@ -484,7 +465,7 @@ const LandingPage: React.FC = () => {
                       <span className="text-5xl font-serif">R$ {currentData.price}</span>
                     </div>
                     <span className={`text-xs block mt-1 ${plan.featured ? 'text-white/50' : 'text-gray-400'}`}>
-                      {billingCycle === 'monthly' ? 'Renovado automaticamente' : `Cobrado a cada ${billingCycle === 'quarterly' ? '3' : '6'} meses`}
+                      {billingCycle === 'monthly' ? 'Sem permanência mínima' : 'Compromisso de 6 meses'}
                     </span>
                   </div>
 

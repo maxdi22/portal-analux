@@ -1,0 +1,122 @@
+/* 
+  AnaLux Editorial Design System 
+  Aesthetic: Couture, Sophisticated, Warm
+*/
+
+:root {
+  --analux-plum: #49172d;
+  --analux-gold-strong: #D0AA62;
+  --analux-gold-soft: #EBCDA1;
+  --analux-cream: #FCF8F3;
+  --analux-cream-deep: #F8F1EA;
+  --analux-sand: #E3D5C5;
+}
+
+body {
+  background-color: var(--analux-cream);
+  color: #49172d;
+}
+
+/* Textures */
+.analux-noise {
+  background-image: 
+    radial-gradient(rgba(73, 23, 45, 0.05) 0.5px, transparent 0.5px),
+    radial-gradient(rgba(255, 255, 255, 0.5) 0.5px, transparent 0.5px);
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,0.8), transparent 90%);
+}
+
+/* Premium Components */
+.analux-hero-card {
+  border-radius: 2.5rem;
+  border: 1px solid rgba(73, 23, 45, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 25px 50px -12px rgba(73, 23, 45, 0.1);
+}
+
+.analux-button-primary {
+  background: linear-gradient(135deg, var(--analux-plum), #2d1435);
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px -5px rgba(73, 23, 45, 0.3);
+}
+
+.analux-button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -5px rgba(73, 23, 45, 0.4);
+  filter: brightness(1.1);
+}
+
+.analux-button-secondary {
+  background: white;
+  color: var(--analux-plum);
+  border: 1px solid rgba(73, 23, 45, 0.1);
+  transition: all 0.3s ease;
+}
+
+.analux-button-secondary:hover {
+  background: var(--analux-cream-deep);
+  border-color: var(--analux-gold-strong);
+}
+
+.analux-floating-note {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(73, 23, 45, 0.05);
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  box-shadow: 0 10px 25px rgba(73, 23, 45, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.analux-stat-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(73, 23, 45, 0.05);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+/* Typography Helpers */
+.font-display { font-family: 'Cormorant Garamond', serif; }
+.font-body { font-family: 'Manrope', sans-serif; }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
+.animate-slideUp { animation: slideUp 0.8s ease-out forwards; }
+
+/* Scrollbar Utilities */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: fit-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

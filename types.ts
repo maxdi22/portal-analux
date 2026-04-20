@@ -99,9 +99,18 @@ export interface User {
   address: Address;
   billing: BillingInfo;
   subscription?: {
-    plan: SubscriptionPlan;
+    plan: SubscriptionPlan; // Mantido para retrocompatibilidade
+    tier_code?: 'essencial' | 'signature';
+    plan_code?: 'essential_flex' | 'essential_6m' | 'signature_flex' | 'signature_6m';
+    monthly_price?: number;
+    shipping_rule?: string;
+    minimum_cycles?: number;
+    cycles_paid?: number;
+    can_cancel_now?: boolean;
+    signup_benefit?: string;
+    renewal_date?: string;
     status: SubscriptionStatus;
-    frequency: SubscriptionFrequency;
+    frequency: SubscriptionFrequency; // Mantido para retrocompatibilidade
     currentBoxStatus: BoxStatus;
     firstBoxDate?: string;
     nextBoxDate: string;
@@ -356,4 +365,130 @@ export interface NavItem {
   id: string;
   label: string;
   icon: React.ReactNode;
+}
+
+export interface LandingPageConfig {
+  assets: {
+    logoDark: string;
+    heroBg: string;
+    heroModel: string;
+    productModel: string;
+    lifestyle: string;
+    boxStill: string;
+    goldPanel: string;
+    editorialVideo: string;
+    [key: string]: string | undefined;
+  };
+  content: {
+    hero: {
+      eyebrow: string;
+      titlePart1: string;
+      titleItalic: string;
+      titlePart2: string;
+      description1: string;
+      description2: string;
+      primaryCTA: string;
+      secondaryCTA: string;
+    };
+    stats: Array<{ label: string; desc: string }>;
+    differentiation: {
+      eyebrow: string;
+      title: string;
+      text1: string;
+      text2: string;
+      card?: {
+        background: {
+          type: 'image' | 'video';
+          url: string;
+          fit: 'cover' | 'contain' | 'auto';
+          repeat: 'no-repeat' | 'repeat' | 'repeat-x' | 'repeat-y';
+          opacity: number;
+        };
+        items: Array<{
+          id: string;
+          icon: string;
+          title: string;
+          desc: string;
+        }>;
+      };
+    };
+    faqItems: Array<{ question: string; answer: string }>;
+    howItWorks?: {
+      title: string;
+      description: string;
+      steps: Array<{
+        id: string;
+        number: string;
+        title: string;
+        desc: string;
+        icon: string;
+      }>;
+    };
+    marquee?: {
+      items: Array<{
+        title: string;
+        desc: string;
+      }>;
+    };
+    box?: {
+      eyebrow: string;
+      title: string;
+      description: string;
+      image: string;
+      items: Array<{
+        title: string;
+        desc: string;
+      }>;
+    };
+    whoItsFor?: {
+      eyebrow: string;
+      title: string;
+      description: string;
+      image1: string;
+      image2: string;
+      quote: string;
+      quoteTag: string;
+    };
+    ritual?: {
+      eyebrow: string;
+      title: string;
+      steps: Array<{
+        id: string;
+        n: string;
+        t: string;
+        d: string;
+      }>;
+      videoUrl: string;
+      videoPoster: string;
+    };
+    portal?: {
+      eyebrow: string;
+      dna: {
+        title: string;
+        titleItalic: string;
+        desc: string;
+        quote: string;
+      };
+      vault: {
+        title: string;
+        titleItalic: string;
+        desc: string;
+        quote: string;
+      };
+      cta: string;
+    };
+    footer?: {
+      manifestoTitle: string;
+      manifestoQuote: string;
+      paragraphs: string[];
+      cta: string;
+    };
+    [key: string]: any;
+  };
+  styling: {
+    heroBgOpacity: number;
+    heroSectionPaddingTop: number;
+    heroSectionPaddingBottom: number;
+    [key: string]: any;
+  };
 }
