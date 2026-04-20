@@ -91,7 +91,20 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <!-- Instant Mobile Shell (Visível apenas enquanto o JS carrega) -->
+    <div id="mobile-shell" class="lg:hidden fixed inset-0 z-[9999] bg-[#49172d] overflow-hidden">
+      <video 
+        src="/freepik_ultrarealistic-cinematic-_2816098516.mp4" 
+        autoplay 
+        muted 
+        playsinline 
+        poster="/cover1.jpg"
+        class="absolute inset-0 w-full h-full object-cover"
+      ></video>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent pointer-events-none"></div>
+    </div>
+  </div>
   <div id="portal-root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
