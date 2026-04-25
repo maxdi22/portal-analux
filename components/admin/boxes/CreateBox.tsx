@@ -399,7 +399,7 @@ const CreateBox = () => {
                         </div>
                         <h3 className="text-lg font-serif text-gray-700">Comece a Curadoria</h3>
                         <p className="text-gray-500 text-sm max-w-sm mx-auto mt-1">
-                            Adicione joias, mimos e elementos sensoriais para compor o ritual desta edição.
+                            Adicione semijoias, mimos e elementos sensoriais para compor o ritual desta edição.
                         </p>
                     </div>
                 ) : (
@@ -461,7 +461,7 @@ const CreateBox = () => {
                                             onChange={(e) => updateItem(item.id, 'category', e.target.value as any)}
                                             className="text-xs bg-gray-50 border-none rounded-md py-1 px-2 text-gray-600"
                                         >
-                                            <option value="jewelry">Joia</option>
+                                            <option value="jewelry">Semijoia</option>
                                             <option value="gift">Mimo</option>
                                             <option value="sensory">Sensorial</option>
                                             <option value="content">Conteúdo</option>
@@ -979,7 +979,7 @@ const CreateBox = () => {
                         </div>
                         <div>
                             <h3 className="font-serif text-lg text-gray-900">Trilha Sonora do Ritual</h3>
-                            <p className="text-xs text-gray-500">A música conecta a alma à joia</p>
+                            <p className="text-xs text-gray-500">A música conecta a alma à semijoia</p>
                         </div>
                     </div>
 

@@ -66,7 +66,7 @@ const Editorial: React.FC = () => {
               <Music size={24} />
             </div>
             <h4 className="text-xl font-serif">O Som</h4>
-            <p className="text-sm text-white/50 leading-relaxed">Dê play na nossa curadoria musical do mês. Deixe que as notas suaves acompanhem o brilho das suas novas joias.</p>
+            <p className="text-sm text-white/50 leading-relaxed">Dê play na nossa curadoria musical do mês. Deixe que as notas suaves acompanhem o brilho das suas novas semijoias.</p>
           </div>
           <div className="bg-white/5 backdrop-blur-md p-8 rounded-[40px] border border-white/10 space-y-4 hover:bg-white/10 transition-all">
             <div className="w-12 h-12 bg-analux-secondary rounded-2xl flex items-center justify-center text-white">

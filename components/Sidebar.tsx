@@ -58,7 +58,7 @@ const Sidebar: React.FC = () => {
     { id: 'dashboard', path: '/dashboard', label: 'Meu Painel', icon: <LayoutDashboard size={20} /> },
     { id: 'style', path: '/style-dna', label: 'Meu DNA', icon: <Sparkles size={20} /> },
     { id: 'community', path: '/community', label: 'Comunidade', icon: <Users size={20} /> },
-    { id: 'vault', path: '/vault', label: 'Porta Joias', icon: <Gem size={20} /> },
+    { id: 'vault', path: '/vault', label: 'Porta Semijoias', icon: <Gem size={20} /> },
     { id: 'box', path: '/box', label: 'Minha Box', icon: <Package size={20} /> },
     { id: 'shop', path: '/shop', label: 'Minhas Compras', icon: <ShoppingBag size={20} /> },
     { id: 'settings', path: '/settings', label: 'Configurações', icon: <Settings size={20} /> },

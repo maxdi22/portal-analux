@@ -27,18 +27,18 @@ const SubscriptionReviewModal: React.FC<SubscriptionReviewModalProps> = ({
     const getCleanValue = (key: string, userValue: string | undefined, mockValue: string = '') => {
         const saved = localStorage.getItem(key);
         // If saved value acts like mock, ignore it
-        if (saved && (saved === 'Alameda das Joias' || saved === '01419-001' || saved === '123' || saved === 'Jardins')) return '';
+        if (saved && (saved === 'Alameda das Semijoias' || saved === '01419-001' || saved === '123' || saved === 'Jardins')) return '';
         if (saved) return saved;
 
         // If user profile has mock data, ignore it
-        if (userValue && (userValue === 'Alameda das Joias' || userValue === '01419-001' || userValue === '123' || userValue === 'Jardins' || userValue === 'SP')) return '';
+        if (userValue && (userValue === 'Alameda das Semijoias' || userValue === '01419-001' || userValue === '123' || userValue === 'Jardins' || userValue === 'SP')) return '';
 
         return userValue || '';
     };
 
     // Address State - Init from LocalStorage or User Profile (Sanitized)
     const [cep, setCep] = React.useState(() => getCleanValue('sub_draft_cep', user.address?.zipCode, '01419-001'));
-    const [street, setStreet] = React.useState(() => getCleanValue('sub_draft_street', user.address?.street, 'Alameda das Joias'));
+    const [street, setStreet] = React.useState(() => getCleanValue('sub_draft_street', user.address?.street, 'Alameda das Semijoias'));
     const [number, setNumber] = React.useState(() => getCleanValue('sub_draft_number', user.address?.number, '123'));
     const [neighborhood, setNeighborhood] = React.useState(() => getCleanValue('sub_draft_neighborhood', user.address?.neighborhood, 'Jardins'));
     const [city, setCity] = React.useState(() => getCleanValue('sub_draft_city', user.address?.city, 'São Paulo'));

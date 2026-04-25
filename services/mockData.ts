@@ -27,7 +27,7 @@ export const initialMockData: User = {
     { id: 'b2', name: 'Box Noite de Gala', date: 'Setembro 2024', image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=300&h=300', theme: 'Eventos Sophistiqués' }
   ],
   address: {
-    street: 'Alameda das Joias',
+    street: 'Alameda das Semijoias',
     number: '123',
     neighborhood: 'Jardins',
     city: 'São Paulo',

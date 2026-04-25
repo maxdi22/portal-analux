@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 const churnData = [
   { reason: 'Preço', count: 45, color: '#f87171' },
-  { reason: 'Muitas Joias', count: 32, color: '#fb923c' },
+  { reason: 'Muitas Semijoias', count: 32, color: '#fb923c' },
   { reason: 'Estilo', count: 28, color: '#fbbf24' },
   { reason: 'Financeiro', count: 54, color: '#ef4444' },
   { reason: 'Outros', count: 18, color: '#94a3b8' },

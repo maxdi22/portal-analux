@@ -167,7 +167,7 @@ const DigitalVault: React.FC = () => {
             <Gem size={18} />
             <span className="text-[10px] font-bold uppercase tracking-[0.4em]">Sua Coleção</span>
           </div>
-          <h1 className="text-6xl font-serif text-analux-primary italic">Seu Porta <span className="text-analux-secondary not-italic">Joias.</span></h1>
+          <h1 className="text-6xl font-serif text-analux-primary italic">Seu Porta <span className="text-analux-secondary not-italic">Semijoias.</span></h1>
         </div>
 
         <div className="flex bg-white/50 backdrop-blur-md p-1.5 rounded-full border border-analux-secondary/10 shadow-sm">
@@ -175,7 +175,7 @@ const DigitalVault: React.FC = () => {
             onClick={() => setActiveMode('vault')}
             className={`px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${activeMode === 'vault' ? 'bg-analux-primary text-white shadow-lg' : 'text-gray-400 hover:text-analux-primary'}`}
           >
-            Minhas Joias
+            Minhas Semijoias
           </button>
           <button
             onClick={() => setActiveMode('phases')}
@@ -189,7 +189,7 @@ const DigitalVault: React.FC = () => {
       {activeMode === 'vault' ? (
         <div className="space-y-16">
 
-          {/* SEÇÃO 1: JOIAS ATIVAS (ACERVO) */}
+          {/* SEÇÃO 1: SEMIJOIAS ATIVAS (ACERVO) */}
           <section className="space-y-6">
             <div className="flex items-center gap-4">
               <h3 className="text-2xl font-serif text-analux-primary">Acervo Pessoal</h3>
@@ -244,7 +244,7 @@ const DigitalVault: React.FC = () => {
             </div>
           </section>
 
-          {/* SEÇÃO 2: JOIAS DA BOX (CONFIRMAÇÃO) */}
+          {/* SEÇÃO 2: SEMIJOIAS DA BOX (CONFIRMAÇÃO) */}
           {user.subscription?.currentBox && user.subscription.currentBox.items && (
             <section className="space-y-6">
               <div className="flex items-center gap-4">
@@ -292,7 +292,7 @@ const DigitalVault: React.FC = () => {
 
                           <button
                             onClick={async () => {
-                              if (confirm('Você confirma que recebeu esta joia? Ela será adicionada ao seu Porta Joias.')) {
+                              if (confirm('Você confirma que recebeu esta semijoia? Ela será adicionada ao seu Porta Semijoias.')) {
                                 const { error } = await supabase.from('digital_vault').insert({
                                   user_id: user.id,
                                   name: boxItem.name,
@@ -311,7 +311,7 @@ const DigitalVault: React.FC = () => {
                         </div>
                       </div>
                       <div className="text-center">
-                        <h4 className="text-sm font-serif text-analux-primary mb-1">Joia Surpresa</h4>
+                        <h4 className="text-sm font-serif text-analux-primary mb-1">Semijoia Surpresa</h4>
                         <p className="text-[9px] text-gray-400 uppercase tracking-widest">Box {user.subscription.currentBox?.name}</p>
                       </div>
                     </div>
@@ -326,7 +326,7 @@ const DigitalVault: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <h3 className="text-2xl font-serif text-analux-primary">Adicionar Relíquia</h3>
-                <p className="text-sm text-gray-400 font-light">Adicione fotos das suas próprias joias para completar seu acervo.</p>
+                <p className="text-sm text-gray-400 font-light">Adicione fotos das suas próprias semijoias para completar seu acervo.</p>
               </div>
               <button
                 onClick={() => setIsAddModalOpen(true)}
@@ -596,7 +596,7 @@ const DigitalVault: React.FC = () => {
                       value={editForm.memory}
                       onChange={e => setEditForm({ ...editForm, memory: e.target.value })}
                       className="w-full bg-analux-contrast border-0 rounded-2xl py-3 px-4 text-sm focus:ring-2 focus:ring-analux-secondary/20 outline-none min-h-[100px]"
-                      placeholder="Escreva sobre o momento especial que esta joia representa..."
+                      placeholder="Escreva sobre o momento especial que esta semijoia representa..."
                     />
                   </div>
 
@@ -666,7 +666,7 @@ const DigitalVault: React.FC = () => {
                   </div>
 
                   <div className="text-center space-y-3">
-                    <p className="text-[10px] text-gray-400 italic">Atribua um vínculo afetivo que você vivenciou com esta joia</p>
+                    <p className="text-[10px] text-gray-400 italic">Atribua um vínculo afetivo que você vivenciou com esta semijoia</p>
                     <button
                       onClick={() => {
                         setEditForm({

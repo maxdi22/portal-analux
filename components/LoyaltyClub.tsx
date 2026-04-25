@@ -22,7 +22,7 @@ const REWARDS_CATALOG = [
     },
     {
         id: 'r3',
-        name: 'Porta-Joias de Veludo',
+        name: 'Porta-Semijoias de Veludo',
         points: 3000,
         image: 'https://images.unsplash.com/photo-1589128777090-f963ac56930d?auto=format&fit=crop&q=80&w=1000',
         type: 'physical',
@@ -34,7 +34,7 @@ const REWARDS_CATALOG = [
         points: 10000,
         image: 'https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80&w=1000',
         type: 'physical',
-        description: 'Uma joia eterna para celebrar sua jornada.'
+        description: 'Uma semijoia eterna para celebrar sua jornada.'
     }
 ];
 

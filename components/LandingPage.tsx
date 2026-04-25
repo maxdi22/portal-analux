@@ -205,7 +205,7 @@ const LandingPage: React.FC = () => {
       },
       semiannual: {
         price: '219',
-        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Permanência (6 meses)', 'Porta-Joias Exclusivo de Adesão']
+        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Permanência (6 meses)', 'Porta-Semijoias Exclusivo de Adesão']
       }
     }
   ];
@@ -305,7 +305,7 @@ const LandingPage: React.FC = () => {
             <span className="text-analux-secondary">Toda fase, uma nova você.</span>
           </h1>
           <p className="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-            Uma box de joias criada para marcar fases, sentimentos e movimentos da sua vida. Mais do que receber peças, você recebe experiências exclusivas.
+            Uma box de semijoias criada para marcar fases, sentimentos e movimentos da sua vida. Mais do que receber peças, você recebe experiências exclusivas.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
             <button
@@ -340,7 +340,7 @@ const LandingPage: React.FC = () => {
           <div className="space-y-10">
             <h2 className="text-5xl font-serif leading-tight">Um convite para<br /><span className="text-analux-secondary">você se sentir.</span></h2>
             <p className="text-gray-500 text-lg leading-relaxed font-light">
-              A Analux Box é uma assinatura mensal onde você recebe uma curadoria exclusiva de joias pensadas para refletir momentos, emotions e fases. Cada edição é construída como um ritual: estética, significado e surpresa.
+              A Analux Box é uma assinatura mensal onde você recebe uma curadoria exclusiva de semijoias pensadas para refletir momentos, emotions e fases. Cada edição é construída como um ritual: estética, significado e surpresa.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
               {[
@@ -367,13 +367,13 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center space-y-6 mb-20">
             <h2 className="text-5xl md:text-6xl font-serif">A anatomia de um presente</h2>
-            <p className="text-white/60 max-w-xl mx-auto">Você não recebe apenas joias. Você recebe um ecossistema de beleza e bem-estar.</p>
+            <p className="text-white/60 max-w-xl mx-auto">Você não recebe apenas semijoias. Você recebe um ecossistema de beleza e bem-estar.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
               {
-                title: 'Joias Premium',
+                title: 'Semijoias Premium',
                 desc: '2 a 4 peças exclusivas (banho ouro 18k ou ródio) pensadas para durar.',
                 img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=400&h=300'
               },
@@ -558,7 +558,7 @@ const LandingPage: React.FC = () => {
             "O brilho que você usa é o reflexo da luz que você carrega."
           </h2>
           <div className="space-y-4 text-gray-500 font-light text-lg">
-            <p>A Analux Box não é sobre joias.</p>
+            <p>A Analux Box não é sobre semijoias.</p>
             <p>É sobre criar pequenos rituais. É sobre se olhar. É sobre marcar fases.</p>
             <p>É sobre se dar um presente todos os meses.</p>
           </div>

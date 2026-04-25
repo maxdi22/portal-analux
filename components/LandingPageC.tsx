@@ -371,7 +371,7 @@ const LandingPageC: React.FC = () => {
       },
       semiannual: {
         price: '219',
-        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Permanência (6 meses)', 'Porta-Joias Exclusivo de Adesão']
+        perks: ['Acesso ao Portal Analux', 'Cobrança Mensal', 'Frete Fixo Nacional', 'Permanência (6 meses)', 'Porta-Semijoias Exclusivo de Adesão']
       }
     }
   ];
@@ -690,7 +690,7 @@ const LandingPageC: React.FC = () => {
                     { id: '2', number: '02', icon: 'CheckCircle2', title: "Defina seu Perfil", desc: "Conte-nos suas preferências para uma curadoria personalizada." },
                     { id: '3', number: '03', icon: 'Sparkles', title: "Curadoria Única", desc: "Nossa inteligência e time de estilo selecionam as peças perfeitas." },
                     { id: '4', number: '04', icon: 'Gift', title: "Receba sua Box", desc: "Sua box chega em sua casa com embalagem exclusiva." },
-                    { id: '5', number: '05', icon: 'Gem', title: "Porta-Joias Digital", desc: "Gerencie sua coleção e organize suas peças favoritas em seu painel exclusivo." }
+                    { id: '5', number: '05', icon: 'Gem', title: "Porta-Semijoias Digital", desc: "Gerencie sua coleção e organize suas peças favoritas em seu painel exclusivo." }
                   ]).map((step, i) => {
                     const IconComponent = (Icons as any)[step.icon] || Icons.HelpCircle;
                     return (
@@ -796,7 +796,7 @@ const LandingPageC: React.FC = () => {
                <div className="relative rounded-[3rem] overflow-hidden group shadow-3xl bg-white border border-analux-plum/5">
                    <div className="relative z-10 p-5 lg:p-10 text-analux-plum/90">
                       {(content.differentiation.card?.items || [
-                          { id: '1', icon: 'Gift', title: "Mais que joias", desc: "Uma entrega pensada para ter atmosfera de edição especial." },
+                          { id: '1', icon: 'Gift', title: "Mais que semijoias", desc: "Uma entrega pensada para ter atmosfera de edição especial." },
                           { id: '2', icon: 'Sparkles', title: "Mais que surpresa", desc: "Descoberta recorrente com linguagem visual e intenção de marca." },
                           { id: '3', icon: 'ShieldCheck', title: "Mais que recorrência", desc: "Uma forma elegante de manter desejo, vínculo e estilo." }
                         ]).map((item) => {
@@ -920,7 +920,7 @@ const LandingPageC: React.FC = () => {
               
               <div className="space-y-4">
                 {(content.box?.items || [
-                    { title: "Joias com direção estética", desc: "Peças escolhidas para conversar entre si e valorizar suas composições." },
+                    { title: "Semijoias com direção estética", desc: "Peças escolhidas para conversar entre si e valorizar suas composições." },
                     { title: "Uma entrega que parece presente", desc: "Box desenhada para criar expectativa real e exclusividade." },
                     { title: "Elementos surpresa", desc: "Detalhes e atmosfera que fazem do recebimento um ritual de luxo." }
                   ]).map((item, i) => {
@@ -953,7 +953,7 @@ const LandingPageC: React.FC = () => {
                    {content.whoItsFor?.title || "Para mulheres que sentem que o detalhe muda tudo."}
                 </h2>
                 <div className="space-y-6 text-lg lg:text-xl font-light text-analux-plum/70 leading-relaxed whitespace-pre-line">
-                   {content.whoItsFor?.description || "A Analux Box é para quem entende que joia não é excesso. É assinatura. É para mulheres que gostam de se montar com mais intenção, se presentear com elegância e construir presença.\n\nSe você valoriza beleza, curadoria e a sensação de receber algo pensado exclusivamente para você, essa experiência foi criada no seu ritmo."}
+                   {content.whoItsFor?.description || "A Analux Box é para quem entende que semijoia não é excesso. É assinatura. É para mulheres que gostam de se montar com mais intenção, se presentear com elegância e construir presença.\n\nSe você valoriza beleza, curadoria e a sensação de receber algo pensado exclusivamente para você, essa experiência foi criada no seu ritmo."}
                 </div>
                 <button onClick={scrollToPlans} className="analux-button-primary w-full sm:w-auto px-8 sm:px-10 py-5 sm:py-6 rounded-full font-bold uppercase tracking-widest text-xs flex justify-center items-center gap-3">
                   Iniciar minha Assinatura <ArrowRight size={18} />
@@ -971,7 +971,7 @@ const LandingPageC: React.FC = () => {
                   <div className="analux-stat-card bg-[#281119] text-white p-8 h-fit">
                     <p className="text-[9px] uppercase tracking-widest opacity-40 mb-3">Filosofia</p>
                     <p className="font-display text-2xl italic">
-                       {content.whoItsFor?.quote || "\"Joias que não competem com você. Elas refinam o que você já transmite.\""}
+                       {content.whoItsFor?.quote || "\"Semijoias que não competem com você. Elas refinam o que você já transmite.\""}
                     </p>
                   </div>
                   <div className="analux-hero-card overflow-hidden h-64 relative group">
@@ -1006,8 +1006,8 @@ const LandingPageC: React.FC = () => {
                 <div className="space-y-10 lg:space-y-12">
                    {(content.ritual?.steps || [
                        { id: "1", n: "01", t: "O Unboxing", d: "A caixa é apenas o começo. Aroma, toque e visual criam a antecipação necessária para o que vem a seguir." },
-                       { id: "2", n: "02", t: "A Descoberta", d: "Cada joia é apresentada com direção de estilo, sugerindo como ela pode transformar seu look do dia." },
-                       { id: "3", n: "03", t: "A Pose", d: "Conecte-se com sua nova versão. Joias têm o poder de mudar como você se sente no espelho." }
+                       { id: "2", n: "02", t: "A Descoberta", d: "Cada semijoia é apresentada com direção de estilo, sugerindo como ela pode transformar seu look do dia." },
+                       { id: "3", n: "03", t: "A Pose", d: "Conecte-se com sua nova versão. Semijoias têm o poder de mudar como você se sente no espelho." }
                      ]).map((item: any, i: number) => (
                         <div key={item.id || i} className="flex gap-6 lg:gap-8 group">
                           <span className="text-3xl lg:text-4xl font-display text-analux-gold-strong leading-none">{item.n}</span>
@@ -1090,7 +1090,7 @@ const LandingPageC: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Column 2: COFRE DE JOIAS */}
+                {/* Column 2: COFRE DE SEMIJOIAS */}
                 <div className="p-10 lg:p-20 flex flex-col group/vault bg-analux-plum/[0.02] relative overflow-hidden">
                   <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-analux-plum/5 rounded-full blur-3xl group-hover/vault:bg-analux-plum/10 transition-all duration-700" />
                   
@@ -1104,7 +1104,7 @@ const LandingPageC: React.FC = () => {
                         {content.portal?.vault?.title || "O Seu Cofre"}
                         <br/>
                         <span className="italic">
-                          {content.portal?.vault?.titleItalic || "de Joias"}
+                          {content.portal?.vault?.titleItalic || "de Semijoias"}
                         </span>
                       </h3>
                       <p className="text-lg lg:text-xl text-analux-plum/60 font-light leading-relaxed">
@@ -1114,7 +1114,7 @@ const LandingPageC: React.FC = () => {
 
                     <div className="p-6 rounded-2xl bg-white/60 border border-analux-plum/5">
                       <p className="text-sm lg:text-base text-analux-plum/80 leading-relaxed italic">
-                        {content.portal?.vault?.quote || "\"Mais do que organizar, o Cofre de Joias eterniza suas conquistas e permite vislumbrar novas combinações em um ambiente de elegância digital.\""}
+                        {content.portal?.vault?.quote || "\"Mais do que organizar, o Cofre de Semijoias eterniza suas conquistas e permite vislumbrar novas combinações em um ambiente de elegância digital.\""}
                       </p>
                     </div>
                   </div>

@@ -415,7 +415,7 @@ const Community: React.FC = () => {
               <div className="bg-analux-secondary text-white w-fit px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] animate-pulse">
                 Destaque da Semana
               </div>
-              <h2 className="text-4xl md:text-5xl font-serif text-white max-w-lg leading-tight">"Joias que contam a história da minha própria evolução."</h2>
+              <h2 className="text-4xl md:text-5xl font-serif text-white max-w-lg leading-tight">"Semijoias que contam a história da minha própria evolução."</h2>
               <div className="flex items-center gap-4">
                 <img src="https://i.pravatar.cc/150?u=leticia" className="w-12 h-12 rounded-2xl border-2 border-white/20 object-cover" />
                 <div>

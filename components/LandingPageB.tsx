@@ -161,7 +161,7 @@ const LandingPageB: React.FC = () => {
                     <div className="absolute w-[80%] h-[90%] bg-[#e8e4df] rounded-t-[500px] bottom-0 overflow-hidden">
                         <img
                             src="https://images.unsplash.com/photo-1576409545582-74d12579b295?q=80&w=2787&auto=format&fit=crop"
-                            alt="Mulher elegante com joias"
+                            alt="Mulher elegante com semijoias"
                             className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-[2s] ease-out mix-blend-multiply"
                         />
                     </div>
@@ -219,7 +219,7 @@ const LandingPageB: React.FC = () => {
                         </h2>
                         <div className="prose prose-sm text-gray-500 mb-10">
                             <p>
-                                A AnaLux não é apenas sobre joias; é sobre o ritual de se sentir preciosa.
+                                A AnaLux não é apenas sobre semijoias; é sobre o ritual de se sentir preciosa.
                                 Nossas peças são desenhadas para mulheres contemporâneas que buscam
                                 expressar sua individualidade sem abrir mão da elegância clássica.
                             </p>
@@ -273,7 +273,7 @@ const LandingPageB: React.FC = () => {
                             <p className="text-white/70 max-w-md mb-12 font-light leading-relaxed">
                                 Se você for comprar cada item separadamente, pagaria muito mais.
                                 A Analux Box traz curadoria de luxo por uma fração do preço,
-                                garantindo que seu acervo de joias cresça com inteligência.
+                                garantindo que seu acervo de semijoias cresça com inteligência.
                             </p>
 
                             <div className="space-y-6">
@@ -312,7 +312,7 @@ const LandingPageB: React.FC = () => {
                             <img
                                 src="https://images.unsplash.com/photo-1615655406736-b37c4fabf923?q=80&w=2670&auto=format&fit=crop"
                                 className="w-full h-full object-cover mix-blend-multiply opacity-80"
-                                alt="Joias Comparison"
+                                alt="Semijoias Comparison"
                             />
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="w-64 h-64 border border-white/30 rounded-full flex items-center justify-center backdrop-blur-sm">
@@ -401,7 +401,7 @@ const LandingPageB: React.FC = () => {
                     <h2 className="text-4xl font-serif text-center mb-16 text-analux-primary">Perguntas Frequentes</h2>
                     <div className="space-y-4">
                         {[
-                            { q: "As joias escurecem?", a: "Não. Todas as peças possuem banho de alta qualidade com verniz de proteção e garantia de 1 ano." },
+                            { q: "As semijoias escurecem?", a: "Não. Todas as peças possuem banho de alta qualidade com verniz de proteção e garantia de 1 ano." },
                             { q: "Posso cancelar quando quiser?", a: "Sim. A assinatura mensal não possui fidelidade. Você tem total liberdade no seu painel." },
                             { q: "E se eu não gostar?", a: "Temos um sistema de trocas facilitado. Sua satisfação é nossa prioridade." }
                         ].map((faq, i) => (
@@ -497,7 +497,7 @@ const LandingPageB: React.FC = () => {
                     <div>
                         <h5 className="text-analux-primary text-lg font-serif normal-case mb-6">Analux</h5>
                         <p className="normal-case font-normal leading-relaxed max-w-xs mb-4">
-                            Elevando a autoestima de mulheres através de joias com alma e design exclusivo.
+                            Elevando a autoestima de mulheres através de semijoias com alma e design exclusivo.
                         </p>
                     </div>
                     <div>
